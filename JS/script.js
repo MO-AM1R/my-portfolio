@@ -118,6 +118,12 @@ function fillSkillsContainer(skills) {
         });
       }
 
+      //To Top
+      const toTop = document.getElementById("to-top");
+      toTop.addEventListener("click", function () {
+        smoothScrollTo("#home");
+      });
+
       window.addEventListener("scroll", updateActiveLink);
       updateActiveLink();
     }
