@@ -92,20 +92,36 @@ function fillSkillsContainer(skills) {
     {
       let sectionArray = Array.from(sections);
       let navArray = Array.from(navLinks);
+      let footerNavBar = document.querySelectorAll(".menu li a");
 
       navArray.forEach((link) => {
         link.addEventListener("click", function (event) {
           event.preventDefault();
           smoothScrollTo(this.getAttribute("href"));
+          toggleNav();
         });
       });
+
       function smoothScrollTo(targetId) {
         const targetSection = document.querySelector(targetId);
         if (targetSection) {
           targetSection.scrollIntoView({ behavior: "smooth" });
         }
-        toggleNav();
       }
+
+      //To Top
+      const toTop = document.getElementById("to-top");
+      toTop.addEventListener("click", function () {
+        smoothScrollTo("#home");
+      });
+
+      //Footer nav bar
+      footerNavBar.forEach((link) => {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          smoothScrollTo(this.getAttribute("href"));
+        });
+      });
 
       function updateActiveLink() {
         sectionArray.forEach((section, i) => {
@@ -117,13 +133,6 @@ function fillSkillsContainer(skills) {
           }
         });
       }
-
-      //To Top
-      const toTop = document.getElementById("to-top");
-      toTop.addEventListener("click", function () {
-        const targetSection = document.querySelector("#home");
-        targetSection.scrollIntoView({ behavior: "smooth" });
-      });
 
       window.addEventListener("scroll", updateActiveLink);
       updateActiveLink();
