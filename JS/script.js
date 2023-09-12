@@ -121,7 +121,8 @@ function fillSkillsContainer(skills) {
       //To Top
       const toTop = document.getElementById("to-top");
       toTop.addEventListener("click", function () {
-        smoothScrollTo("#home");
+        const targetSection = document.querySelector("#home");
+        targetSection.scrollIntoView({ behavior: "smooth" });
       });
 
       window.addEventListener("scroll", updateActiveLink);
