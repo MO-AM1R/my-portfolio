@@ -31,7 +31,7 @@ To run this portfolio website locally, follow these steps:
 1. Clone this repository to your local machine using the following command:
 
    ```
-   git clone [https://github.com/your-username/your-portfolio-repo.git](https://github.com/MO-AM1R/my-portfolio)
+   git clone https://github.com/MO-AM1R/my-portfolio
    ```
 
 2. Open the `index.html` file in your web browser to view the portfolio website.
