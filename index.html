@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <link rel="stylesheet" href="CSS/styleSheet.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"
+    />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@coreui/icons/css/all.min.css"
+    />
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <link rel="icon" href="Images/logo.png" />
+    <script src="JS/script.js"></script>
+    <title>Portfolio | Mohamed Amir</title>
+  </head>
+  <body>
+    <div class="navContainer">
+      <div class="logo">M0-AM1R</div>
+
+      <div class="menuIcon">
+        <i class="cil-hamburger-menu" onclick="toggleNav()"></i>
+      </div>
+
+      <nav>
+        <div class="closeIcon">
+          <i class="fa fa-close" onclick="toggleNav()"></i>
+        </div>
+        <ul class="nav-links">
+          <div class="logo">M0-AM1R</div>
+
+          <li><a class="navLink" href="#home">Home</a></li>
+          <li><a class="navLink" href="#about">About</a></li>
+          <li><a class="navLink" href="#skills">Skills</a></li>
+          <li><a class="navLink" href="#education">Education</a></li>
+          <li><a class="navLink" href="#projects">Projects</a></li>
+          <li><a class="navLink" href="#certifications">Certifications</a></li>
+          <li><a class="navLink" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div id="home">
+      <div class="section">
+        <div class="sayHello animate sectionEnter">
+          <h1>Hi There &#128075;,</h1>
+          <h1>I'm<span> Mohamed Amir</span></h1>
+          <h4>I'm a <span id="multiple-text"></span></h4>
+          <h5 id="Accounts">My Accounts</h5>
+          <div class="myLinks">
+            <a
+              href="https://www.facebook.com/MOAM1R"
+              target="_blank"
+              class="cib-facebook"
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/mo-am1r/"
+              target="_blank"
+              class="cib-linkedin"
+            ></a>
+            <a
+              href="https://github.com/MO-AM1R"
+              target="_blank"
+              class="cib-github"
+            ></a>
+            <a
+              href="https://leetcode.com/MO-AM1R/"
+              target="_blank"
+              class="cib-leetcode"
+            ></a>
+            <a
+              href="https://t.me/MOAM1R"
+              target="_blank"
+              class="cib-telegram"
+            ></a>
+          </div>
+        </div>
+
+        <div id="LogoContainer">
+          <img
+            class="myLogo"
+            id="Logo"
+            onmousemove="changePosition(event, this)"
+            onmouseleave="resetPosition(this)"
+            src="Images/logo.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div id="about">
+      <div class="pageStart">About Me&emsp;<i class="fa fa-user"></i></div>
+      <div class="section">
+        <div class="information">
+          <div class="myImageContainer">
+            <img class="myImage" src="Images/My Image.jpg" />
+          </div>
+          <div class="myInfo">
+            <p>I'm Mohamed Amir</p>
+            <p>
+              I'm student at Faculty of
+              <strong>Computer Science and Artificial Intelligence</strong>
+            </p>
+            <p>at <strong>Cairo Unvirsety</strong></p>
+            <p>
+              My desire to expand my coding abilities and create applications
+              and websites is quite strong.
+            </p>
+            <a
+              class="resumeBtn"
+              href="https://drive.google.com/file/d/1k_JapPWUQPmc56KZm5lsQOHJlMaPcek0/view?usp=sharing"
+              target="_blank"
+            >
+              Resume
+              <i class="fa fa-angle-right" style="font-size: large"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="skills">
+      <div class="pageStart">
+        My Skills&emsp;<i class="fa fa-laptop-code"></i>
+      </div>
+
+      <div class="section">
+        <div class="skillsContainer"></div>
+      </div>
+    </div>
+
+    <div id="education">
+      <div class="pageStart">
+        My Education&emsp;
+        <i class="fa fa-graduation-cap"></i>
+      </div>
+
+      <div class="section">
+        <div class="educationInfo">
+          <img src="Images/Cairo University.jpg" />
+          <div class="text">
+            <p>Bachelor of Computer Science and Artificial Intelligence</p>
+            <p>
+              Faculty of Computer Science and Artificial Intelligence | Cairo
+              University
+            </p>
+            <p>2021 - 2025 | Uncompleted</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="projects">
+      <div class="pageStart">
+        My Projects&emsp;
+        <i class="fa fa-laptop-code"></i>
+      </div>
+      <div class="section">
+        <div class="projectsContainer">
+          <div class="project">
+            <img src="Images/Bank System.png" />
+            <div class="projectInfo">
+              <h1>Bank System</h1>
+              <p>
+                Database project that can register new accounts in banks and
+                each bank has branches, employees and accounts each customer can
+                take loans
+              </p>
+              <a
+                href="https://github.com/MO-AM1R/MyProjects/tree/main/Database/Bank System"
+                class="btn"
+                target="_blank"
+                >See Project</a
+              >
+            </div>
+          </div>
+
+          <div class="project">
+            <img src="Images/big Numbers.png" />
+
+            <div class="projectInfo">
+              <h1>Big Decimal Int</h1>
+              <p>
+                C++ project that store big integer numbers and do operations on
+                it
+              </p>
+              <a
+                href="https://github.com/MO-AM1R/MyProjects/tree/main/Big Decimal Int"
+                class="btn"
+                target="_blank"
+                >See Project</a
+              >
+            </div>
+          </div>
+
+          <div class="project">
+            <img src="Images/big Numbers.png" />
+
+            <div class="projectInfo">
+              <h1>Big Decimal Real</h1>
+              <p>
+                C++ project that store big real numbers and do operations on it
+              </p>
+              <a
+                href="https://github.com/MO-AM1R/MyProjects/tree/main/Big Decimal Real"
+                class="btn"
+                target="_blank"
+                >See Project</a
+              >
+            </div>
+          </div>
+
+          <div class="project">
+            <img
+              src="https://msatechnosoft.in/blog/wp-content/uploads/2018/09/Data-Structure-tutorial-MSA-Technosoft.jpg"
+            />
+
+            <div class="projectInfo">
+              <h1>Data Structure</h1>
+              <p>
+                C++ projects that implement most of the data Structures like
+                Trees, Linked lists, Graphs and some Algorithms like sorting
+                Algorithms
+              </p>
+              <a
+                href="https://github.com/MO-AM1R/MyProjects/tree/main/Data Structure & Algorithms"
+                class="btn"
+                target="_blank"
+                >See Project</a
+              >
+            </div>
+          </div>
+
+          <div class="project">
+            <img
+              src="https://attachment.eab.com/wp-content/uploads/2019/08/SAF-lightest-blue.png"
+            />
+
+            <div class="projectInfo">
+              <h1>Student Affairs Project</h1>
+              <p>
+                Website for student affairs can register new users or login,
+                remove students, add new student, change information for
+                student,.... using HTML, Ajax, CSS, Python (Django)
+              </p>
+              <a
+                href="https://github.com/MO-AM1R/MyProjects/tree/main/Student Affairs Website"
+                class="btn"
+                target="_blank"
+                >See Project</a
+              >
+            </div>
+          </div>
+
+          <div class="project">
+            <img src="Images/Movie App.png" />
+
+            <div class="projectInfo">
+              <h1>Movie App API project</h1>
+              <p>
+                Website use movie API and show the data and provide dynamic
+                searching using HTML, JS, CSS
+              </p>
+              <a
+                href="https://github.com/MO-AM1R/MyProjects/tree/main/Movie Website"
+                class="btn"
+                target="_blank"
+                >See Project</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <a
+          class="viewAllBtn"
+          href="https://github.com/MO-AM1R/MyProjects"
+          target="_blank"
+          >View all
+          <i class="fa fa-angle-right" style="font-size: large"></i>
+        </a>
+      </div>
+    </div>
+
+    <div id="certifications">
+      <div class="pageStart">
+        My Certifications&emsp;
+        <i class="fa fa-certificate"></i>
+      </div>
+
+      <div class="section">
+        <div class="certificationsContainer">
+          <div class="certificate">
+            <img
+              src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
+            />
+            <div class="certificateInfo">
+              <h1>Dart Programming Language</h1>
+              <p>
+                An Udemy certificate about
+                <strong>complete Dart learning</strong>
+              </p>
+              <a
+                href="https://www.udemy.com/certificate/UC-6b2b75a6-3568-4c68-a8c1-95a27b2143db/"
+                class="btn"
+                target="_blank"
+                >See Certificate</a
+              >
+            </div>
+          </div>
+          <div class="certificate">
+            <img
+              src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
+            />
+            <div class="certificateInfo">
+              <h1>Dart Programming Language</h1>
+              <p>
+                An Udemy certificate about
+                <strong>Web Front End learning</strong>
+              </p>
+              <a
+                href="https://www.udemy.com/certificate/UC-7b77136d-7280-4096-8523-e8142874dcd2/"
+                class="btn"
+                target="_blank"
+                >See Certificate</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="contact">
+      <div class="pageStart">
+        Contact Me&emsp;
+        <i class="fa fa-headset"></i>
+      </div>
+
+      <div class="section">
+        <div class="contactContainer">
+          <div class="columnOne">
+            <img
+              src="https://qontak.com/wp-content/uploads/2022/10/Tugas-Contact-Center.webp"
+            />
+          </div>
+          <div class="columnTwo">
+            <div class="inputIcon">
+              <i class="fa fa-user icon"></i>
+              <input
+                onfocus="toggleFocus(this)"
+                onblur="toggleFocus(this)"
+                placeholder="Name"
+              />
+            </div>
+            <div class="inputIcon">
+              <i class="fa fa-envelope icon"></i>
+              <input
+                onfocus="toggleFocus(this)"
+                onblur="toggleFocus(this)"
+                placeholder="Email"
+              />
+            </div>
+            <div class="inputIcon">
+              <i class="fa fa-phone icon"></i>
+              <input
+                onfocus="toggleFocus(this)"
+                onblur="toggleFocus(this)"
+                placeholder="Phone"
+              />
+            </div>
+            <div class="inputIcon">
+              <i class="fa fa-message icon"></i>
+              <textarea
+                placeholder="Message"
+                onfocus="toggleFocus(this)"
+                onblur="toggleFocus(this)"
+                rows="5"
+              ></textarea>
+            </div>
+            <a onclick="submit()"
+              >Submit
+              <i class="cil-send"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="waves">
+          <div class="wave" id="wave1"></div>
+          <div class="wave" id="wave2"></div>
+          <div class="wave" id="wave3"></div>
+          <div class="wave" id="wave4"></div>
+        </div>
+        <ul class="social-icon">
+          <li class="social-icon-item">
+            <a
+              class="social-icon-link"
+              href="https://www.facebook.com/MOAM1R"
+              target="_blank"
+            >
+              <i class="cib-facebook"></i>
+            </a>
+          </li>
+          <li class="social-icon-item">
+            <a
+              class="social-icon-link"
+              href="https://leetcode.com/MO-AM1R/"
+              target="_blank"
+            >
+              <i class="cib-leetcode"></i>
+            </a>
+          </li>
+          <li class="social-icon-item">
+            <a
+              class="social-icon-link"
+              href="https://t.me/MOAM1R"
+              target="_blank"
+            >
+              <i class="cib-telegram"></i>
+            </a>
+          </li>
+          <li class="social-icon-item">
+            <a
+              class="social-icon-link"
+              href="https://github.com/MO-AM1R"
+              target="_blank"
+            >
+              <i class="cib-github"></i>
+            </a>
+          </li>
+          <li class="social-icon-item">
+            <a
+              class="social-icon-link"
+              href="https://www.linkedin.com/in/mo-am1r/"
+              target="_blank"
+            >
+              <i class="cib-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="menu">
+          <li class="menu-item">
+            <a class="menu-link" href="#home">Home</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="#about">About</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="#skills">Skills</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="#education">Education</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="#projects">Projects</a>
+          </li>
+          <li class="menu-item">
+            <a class="menu-link" href="#certifications">Certifications</a>
+          </li>
+        </ul>
+        <br />
+        <p>
+          &copy;2023 Designed By Mohamed Amir
+          <span
+            ><i
+              class="fa fa-heart animate grow animate--infinite animate--slow"
+            ></i
+          ></span>
+        </p>
+      </footer>
+    </div>
+
+    <a class="to-top" href="#">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </body>
+</html>
