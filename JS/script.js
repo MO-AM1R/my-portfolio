@@ -67,9 +67,11 @@ function fillSkillsContainer(skills) {
   document.addEventListener("DOMContentLoaded", async function () {
     new Typed("#multiple-text", {
       strings: [
-        "Full-Stack Developer",
-        "Flutter Developer",
-        "student at Cairo University",
+        "Mobile App Developer",
+        "Flutter Instructor @Go Academy",
+        "Flutter Content Creator@Go Academy",
+        "Graduated from the Faculty of Computers and Artificial Intelligence",
+        "Mobile Application Development (Native) Trainee @ ITI",
       ],
       typeSpeed: 60,
       backSpeed: 40,
