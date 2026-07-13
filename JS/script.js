@@ -217,7 +217,7 @@ window.addEventListener('scroll', requestTimelineUpdate, { passive: true });
 window.addEventListener('resize', requestTimelineUpdate);
 requestTimelineUpdate();
 
-// Telegram contact form. The browser never receives the bot token.
+// Telegram contact form. The bot token remains inside the Vercel Function.
 const telegramForm = document.getElementById('telegramForm');
 const telegramStatus = document.getElementById('telegramStatus');
 
@@ -227,44 +227,73 @@ function setTelegramStatus(message, type = '') {
   telegramStatus.className = `form-status ${type}`.trim();
 }
 
-async function postTelegramMessage(payload) {
-  // /api/contact is the friendly Netlify redirect. The direct function URL is
-  // kept as a fallback for older deployments that have not applied netlify.toml.
-  const endpoints = ['/api/contact', '/.netlify/functions/send-telegram'];
-  let lastError = new Error('Telegram endpoint is unavailable.');
+function extractApiError(value, depth = 0) {
+  if (depth > 4 || value == null) return '';
 
-  for (const endpoint of endpoints) {
+  if (typeof value === 'string') return value;
+  if (value instanceof Error) return value.message;
+
+  if (typeof value === 'object') {
+    const preferredKeys = [
+      'message',
+      'description',
+      'error',
+      'details',
+      'detail'
+    ];
+
+    for (const key of preferredKeys) {
+      const message = extractApiError(value[key], depth + 1);
+      if (message) return message;
+    }
+
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const contentType = response.headers.get('content-type') || '';
-      const result = contentType.includes('application/json')
-        ? await response.json().catch(() => ({}))
-        : { error: (await response.text().catch(() => '')).slice(0, 180) };
-      if (response.ok) return result;
-
-      const deploymentHint = response.status === 404
-        ? 'Telegram function was not found. Deploy the complete project through Netlify Git or Netlify CLI, not as static files only.'
-        : '';
-      lastError = new Error(result.error || deploymentHint || `Request failed with status ${response.status}.`);
-      // A missing redirect may return 404; try the direct function URL.
-      if (response.status !== 404 || endpoint === endpoints[endpoints.length - 1]) {
-        throw lastError;
-      }
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error('Could not send the message.');
-      if (endpoint === endpoints[endpoints.length - 1]) throw lastError;
+      const serialized = JSON.stringify(value);
+      return serialized === '{}' ? '' : serialized;
+    } catch {
+      return '';
     }
   }
 
-  throw lastError;
+  return String(value);
+}
+
+async function postTelegramMessage(payload) {
+  const response = await fetch('/api/contact', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const contentType = response.headers.get('content-type') || '';
+  let result;
+
+  if (contentType.includes('application/json')) {
+    result = await response.json().catch(() => ({}));
+  } else {
+    const responseText = await response.text().catch(() => '');
+    result = { error: responseText.slice(0, 300) };
+  }
+
+  if (!response.ok || result?.ok === false) {
+    const deploymentHint =
+      response.status === 404
+        ? 'The Vercel Function was not found. Make sure api/contact.js is in the deployed project root, then redeploy.'
+        : '';
+
+    const apiMessage =
+      extractApiError(result?.error) ||
+      extractApiError(result) ||
+      deploymentHint ||
+      `Request failed with status ${response.status}.`;
+
+    throw new Error(apiMessage);
+  }
+
+  return result;
 }
 
 telegramForm?.addEventListener('submit', async (event) => {
@@ -277,7 +306,10 @@ telegramForm?.addEventListener('submit', async (event) => {
   }
 
   if (window.location.protocol === 'file:') {
-    setTelegramStatus('Run the site with “netlify dev” or deploy it through Netlify Git/CLI to test Telegram. Static file preview cannot execute the serverless function.', 'error');
+    setTelegramStatus(
+      'Run the project with “vercel dev” or test it on the deployed Vercel website. A local file preview cannot execute /api/contact.',
+      'error'
+    );
     return;
   }
 
@@ -286,17 +318,30 @@ telegramForm?.addEventListener('submit', async (event) => {
 
   const submitButton = telegramForm.querySelector('button[type="submit"]');
   const originalContent = submitButton.innerHTML;
+
   submitButton.disabled = true;
-  submitButton.innerHTML = '<span>Sending…</span><i class="fa-solid fa-spinner fa-spin"></i>';
+  submitButton.innerHTML =
+    '<span>Sending…</span><i class="fa-solid fa-spinner fa-spin"></i>';
   setTelegramStatus('Sending your message…');
 
   try {
     await postTelegramMessage(data);
     telegramForm.reset();
-    setTelegramStatus('Message sent successfully. I’ll get back to you soon.', 'success');
+    setTelegramStatus(
+      'Message sent successfully. I’ll get back to you soon.',
+      'success'
+    );
   } catch (error) {
     console.error('Telegram contact error:', error);
-    setTelegramStatus(`${error.message || 'Could not send through Telegram.'} You can use “Open Telegram” or email instead.`, 'error');
+
+    const message =
+      extractApiError(error) ||
+      'Could not send through Telegram.';
+
+    setTelegramStatus(
+      `${message} You can use “Open Telegram” or email instead.`,
+      'error'
+    );
   } finally {
     submitButton.disabled = false;
     submitButton.innerHTML = originalContent;
