@@ -1,245 +1,329 @@
-// Global Elements
-const sections = document.getElementsByClassName("section");
-const navLinks = document.getElementsByClassName("navLink");
+const root = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const transitionOverlay = document.getElementById('themeTransitionOverlay');
+const storedTheme = localStorage.getItem('portfolio-theme');
+const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-var sectionEnimations = [
-  { enter: "", exit: "" },
-  { enter: "sectionEnter", exit: "sectionExit" },
-  { enter: "upToBottom", exit: "bottomToUp" },
-  { enter: "upToBottom", exit: "bottomToUp" },
-  { enter: "sectionEnter", exit: "sectionExit" },
-  { enter: "sectionEnter", exit: "sectionExit" },
-  { enter: "upToBottom", exit: "bottomToUp" },
-];
+root.dataset.theme = storedTheme || preferredTheme;
 
-async function showAccounts() {
-  const accounts = document.getElementById("Accounts");
-  const aboutme = document.getElementsByClassName("myinks")[0];
-  accounts.style.opacity = "1";
-  aboutme.style.opacity = "1";
+function updateThemeUI() {
+  const isDark = root.dataset.theme === 'dark';
+  document.querySelector('meta[name="theme-color"]').content = isDark ? '#071619' : '#f5f8f8';
+  toggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
+  toggle.title = `Switch to ${isDark ? 'light' : 'dark'} theme`;
 }
 
-function changePosition(mouse, element) {
-  const imageContainer = element.parentNode;
-  const image = element;
-
-  const { clientX, clientY } = mouse;
-  const containerRect = imageContainer.getBoundingClientRect();
-
-  const offsetX = clientX - containerRect.left;
-  const offsetY = clientY - containerRect.top;
-
-  const centerX = containerRect.width / 2;
-  const centerY = containerRect.height / 2;
-
-  const moveX = (centerX - offsetX) / 5;
-  const moveY = (centerY - offsetY) / 5;
-
-  image.style.transform = `translate(${moveX}px, ${moveY}px)`;
+function themeRevealGeometry() {
+  const rect = toggle.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  root.style.setProperty('--theme-x', `${x}px`);
+  root.style.setProperty('--theme-y', `${y}px`);
+  root.style.setProperty('--theme-radius', `${radius}px`);
+  return { x, y, radius };
 }
 
-function resetPosition(element) {
-  element.style.transform = `translate(0px, 0px)`;
+function commitTheme(nextTheme) {
+  root.dataset.theme = nextTheme;
+  localStorage.setItem('portfolio-theme', nextTheme);
+  updateThemeUI();
 }
 
-async function fetchData(type = "skills") {
-  let response = await fetch("../JSON/skills.json");
-  const data = await response.json();
-  return data;
-}
+async function switchTheme() {
+  if (toggle.disabled) return;
+  toggle.disabled = true;
+  const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  const { x, y, radius } = themeRevealGeometry();
 
-function fillSkillsContainer(skills) {
-  let skillsContainer = document.getElementsByClassName("skillsContainer")[0];
-  let skillHTML = "";
-  skills.forEach((skill) => {
-    skillHTML += `
-        <div class="skill">
-              <div class="info">
-                <img src=${skill.icon} alt="skill" />
-                <span>${skill.name}</span>
-              </div>
-            </div>`;
-  });
-  skillsContainer.innerHTML = skillHTML;
-}
-
-{
-  document.addEventListener("DOMContentLoaded", async function () {
-    new Typed("#multiple-text", {
-      strings: [
-        "Mobile App Developer",
-        "Flutter Instructor @Go Academy",
-        "Flutter Content Creator@Go Academy",
-        "Graduated from the Faculty of Computers and Artificial Intelligence",
-        "Mobile Application Development (Native) Trainee @ ITI",
-      ],
-      typeSpeed: 60,
-      backSpeed: 40,
-      backDelay: 60,
-      loop: true,
-    });
-
-    fetchData().then((data) => {
-      fillSkillsContainer(data);
-    });
-
-    function isElementInViewport(element) {
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top <= window.innerHeight / 2 &&
-        rect.bottom >= window.innerHeight / 2
-      );
+  if (!reduceMotion && document.startViewTransition) {
+    root.classList.add('theme-transition');
+    const transition = document.startViewTransition(() => commitTheme(nextTheme));
+    try {
+      await transition.finished;
+    } finally {
+      root.classList.remove('theme-transition');
+      toggle.disabled = false;
     }
-    // Nav Part
-    {
-      let sectionArray = Array.from(sections);
-      let navArray = Array.from(navLinks);
-      let footerNavBar = document.querySelectorAll(".menu li a");
-
-      navArray.forEach((link) => {
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          smoothScrollTo(this.getAttribute("href"));
-          toggleNav();
-        });
-      });
-
-      function smoothScrollTo(targetId) {
-        const targetSection = document.querySelector(targetId);
-        if (targetSection) {
-          targetSection.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-
-      //To Top
-      const toTop = document.getElementById("to-top");
-      toTop.addEventListener("click", function () {
-        smoothScrollTo("#home");
-      });
-
-      //Footer nav bar
-      footerNavBar.forEach((link) => {
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          smoothScrollTo(this.getAttribute("href"));
-        });
-      });
-
-      function updateActiveLink() {
-        sectionArray.forEach((section, i) => {
-          if (isElementInViewport(section)) {
-            navArray.forEach((element) => {
-              element.classList.remove("active");
-            });
-            navArray[i].classList.add("active");
-          }
-        });
-      }
-
-      window.addEventListener("scroll", updateActiveLink);
-      updateActiveLink();
-    }
-
-    // ------------------------------------------------------
-    // Section Animations
-    {
-      let sectionArray = Array.from(sections);
-
-      function appearToTop() {
-        if (window.scrollY > 120) {
-          let toTop = document.getElementsByClassName("to-top")[0];
-          toTop.style.opacity = "1";
-          toTop.classList.add("animate", "toDown");
-        } else {
-          let toTop = document.getElementsByClassName("to-top")[0];
-          toTop.style.opacity = "0";
-          toTop.classList.remove("animate", "toDown");
-        }
-      }
-
-      function isActive(index) {
-        return navLinks[index].classList.contains("active");
-      }
-
-      function animateSections() {
-        sectionArray.forEach((section, i) => {
-          if (isActive(i)) {
-            if (sectionEnimations[i].enter != "") {
-              section.classList.remove("animate", sectionEnimations[i].exit);
-              section.classList.add("animate", sectionEnimations[i].enter);
-              section.style.opacity = "1";
-            }
-          } else {
-            if (sectionEnimations[i].enter != "") {
-              section.classList.remove("animate", sectionEnimations[i].enter);
-              section.classList.add("animate", sectionEnimations[i].exit);
-              section.style.opacity = "0";
-            }
-          }
-        });
-      }
-
-      window.addEventListener("scroll", animateSections);
-      window.addEventListener("scroll", appearToTop);
-      animateSections();
-    }
-  });
-}
-
-function toggleFocus(element) {
-  const inputIcon = element.parentNode;
-  const icon = inputIcon.children[0];
-  inputIcon.classList.toggle("inputfocused");
-  icon.classList.toggle("iconfocused");
-}
-
-function alertMessage() {
-  swal({
-    icon: "error",
-    title: "Oops...",
-    text: "There is an empty field!",
-  });
-}
-
-function submit() {
-  if (document.querySelectorAll("textarea")[0].value == "") {
-    alertMessage();
     return;
   }
 
-  var info = [];
+  if (!reduceMotion && transitionOverlay) {
+    transitionOverlay.style.setProperty('--theme-x', `${x}px`);
+    transitionOverlay.style.setProperty('--theme-y', `${y}px`);
+    transitionOverlay.style.setProperty('--theme-radius', `${radius}px`);
+    transitionOverlay.style.background = nextTheme === 'dark' ? '#071619' : '#f5f8f8';
+    transitionOverlay.classList.add('is-revealing');
+    window.setTimeout(() => commitTheme(nextTheme), 820);
+    window.setTimeout(() => {
+      transitionOverlay.classList.remove('is-revealing');
+      toggle.disabled = false;
+    }, 930);
+    return;
+  }
 
-  document.querySelectorAll(".inputIcon input").forEach((element) => {
-    if (element.value == "") {
-      alertMessage();
-      return;
+  commitTheme(nextTheme);
+  toggle.disabled = false;
+}
+
+updateThemeUI();
+toggle.addEventListener('click', switchTheme);
+
+// Mobile navigation.
+const menu = document.querySelector('.site-nav');
+const menuBtn = document.querySelector('.menu-toggle');
+menuBtn.addEventListener('click', () => {
+  const open = menu.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', String(open));
+  menuBtn.innerHTML = `<i class="fa-solid fa-${open ? 'xmark' : 'bars'}"></i>`;
+});
+document.querySelectorAll('.site-nav a').forEach((link) => link.addEventListener('click', () => {
+  menu.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+}));
+
+// Section reveal animations.
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+
+
+// Skills can switch between grouped categories and a visual icon gallery.
+const skillsViewToggle = document.getElementById('skillsViewToggle');
+const skillCategoryView = document.getElementById('skillCategoryView');
+const skillGalleryView = document.getElementById('skillGalleryView');
+
+function setSkillsView(showGallery, persist = true) {
+  if (!skillsViewToggle || !skillCategoryView || !skillGalleryView) return;
+
+  skillCategoryView.hidden = showGallery;
+  skillGalleryView.hidden = !showGallery;
+  skillCategoryView.classList.toggle('is-active', !showGallery);
+  skillGalleryView.classList.toggle('is-active', showGallery);
+  skillsViewToggle.setAttribute('aria-pressed', String(showGallery));
+  skillsViewToggle.querySelector('span').textContent = showGallery
+    ? 'Show Skill Categories'
+    : 'Explore Skill Gallery';
+  skillsViewToggle.querySelector('i').className = showGallery
+    ? 'fa-solid fa-layer-group'
+    : 'fa-solid fa-table-cells-large';
+
+  if (persist) localStorage.setItem('portfolio-skills-view', showGallery ? 'gallery' : 'categories');
+}
+
+setSkillsView(localStorage.getItem('portfolio-skills-view') === 'gallery', false);
+skillsViewToggle?.addEventListener('click', () => {
+  setSkillsView(skillsViewToggle.getAttribute('aria-pressed') !== 'true');
+});
+
+document.querySelectorAll('.skill-icon-frame img').forEach((image) => {
+  image.addEventListener('error', () => {
+    image.hidden = true;
+    image.parentElement?.classList.add('icon-fallback');
+  }, { once: true });
+});
+
+// Active navigation item.
+const sections = [...document.querySelectorAll('main section[id]')];
+const navigationLinks = [...document.querySelectorAll('.site-nav a')];
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    navigationLinks.forEach((link) => {
+      link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+    });
+  });
+}, { rootMargin: '-42% 0px -48% 0px' });
+sections.forEach((section) => navObserver.observe(section));
+
+// Auto-typing role animation without an external dependency.
+const typedElement = document.getElementById('typedText');
+const typingPhrases = [
+  'Android Developer',
+  'Jetpack Compose Developer',
+  'Kotlin Multiplatform Dev',
+  'Cairo University Graduate',
+  'ITI Native Mobile Trainee'
+];
+
+function startTypewriter() {
+  if (!typedElement) return;
+  if (reduceMotion) {
+    typedElement.textContent = typingPhrases[0];
+    return;
+  }
+
+  let phraseIndex = 0;
+  let characterIndex = 0;
+  let deleting = false;
+
+  const tick = () => {
+    const phrase = typingPhrases[phraseIndex];
+    characterIndex += deleting ? -1 : 1;
+    typedElement.textContent = phrase.slice(0, Math.max(0, characterIndex));
+
+    let delay = deleting ? 34 : 64;
+    if (!deleting && characterIndex === phrase.length) {
+      deleting = true;
+      delay = 1450;
+    } else if (deleting && characterIndex === 0) {
+      deleting = false;
+      phraseIndex = (phraseIndex + 1) % typingPhrases.length;
+      delay = 350;
     }
-    info.push(element.value);
-  });
-  info.push(document.querySelectorAll("textarea")[0].value);
+    window.setTimeout(tick, delay);
+  };
 
-  var message = `  - Sender: ${info[0]}%0A  - Email: ${info[1]}%0A  - Phone: ${info[2]}%0A  - Body: ${info[3]}`;
+  typedElement.textContent = '';
+  window.setTimeout(tick, 350);
+}
+startTypewriter();
 
-  var token = "6354509058:AAEX7F7bsPDu2AH7X2Zis-Ynks1NlXhjbxM";
-  var chatId = -991103490;
-  var url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${message}`;
+// Education timeline grows according to the visitor's scroll position.
+const timeline = document.getElementById('educationTimeline');
+const timelineProgress = document.getElementById('timelineProgress');
+const timelineItems = timeline ? [...timeline.querySelectorAll('.timeline-item')] : [];
+let timelineTicking = false;
 
-  let api = new XMLHttpRequest();
-  api.open("GET", url, true);
-  api.send();
+function updateTimelineProgress() {
+  timelineTicking = false;
+  if (!timeline || !timelineProgress) return;
 
-  document.querySelectorAll(".inputIcon input").forEach((element) => {
-    element.value = "";
-  });
-  document.querySelectorAll("textarea")[0].value = "";
+  const rect = timeline.getBoundingClientRect();
+  const viewportAnchor = innerHeight * 0.58;
+  const rawProgress = (viewportAnchor - rect.top) / Math.max(rect.height, 1);
+  const progress = Math.min(1, Math.max(0, rawProgress));
+  timelineProgress.style.height = `${progress * 100}%`;
 
-  swal({
-    icon: "success",
-    title: "Successful process",
-    text: "The message was sent successfully",
+  timelineItems.forEach((item) => {
+    const dot = item.querySelector('.timeline-dot');
+    if (!dot) return;
+    const dotRect = dot.getBoundingClientRect();
+    item.classList.toggle('is-active', dotRect.top + dotRect.height / 2 <= viewportAnchor);
   });
 }
 
-function toggleNav() {
-  document.querySelector("nav").classList.toggle("show");
+function requestTimelineUpdate() {
+  if (timelineTicking) return;
+  timelineTicking = true;
+  requestAnimationFrame(updateTimelineProgress);
 }
+window.addEventListener('scroll', requestTimelineUpdate, { passive: true });
+window.addEventListener('resize', requestTimelineUpdate);
+requestTimelineUpdate();
+
+// Telegram contact form. The browser never receives the bot token.
+const telegramForm = document.getElementById('telegramForm');
+const telegramStatus = document.getElementById('telegramStatus');
+
+function setTelegramStatus(message, type = '') {
+  if (!telegramStatus) return;
+  telegramStatus.textContent = message;
+  telegramStatus.className = `form-status ${type}`.trim();
+}
+
+async function postTelegramMessage(payload) {
+  // /api/contact is the friendly Netlify redirect. The direct function URL is
+  // kept as a fallback for older deployments that have not applied netlify.toml.
+  const endpoints = ['/api/contact', '/.netlify/functions/send-telegram'];
+  let lastError = new Error('Telegram endpoint is unavailable.');
+
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const contentType = response.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await response.json().catch(() => ({}))
+        : { error: (await response.text().catch(() => '')).slice(0, 180) };
+      if (response.ok) return result;
+
+      const deploymentHint = response.status === 404
+        ? 'Telegram function was not found. Deploy the complete project through Netlify Git or Netlify CLI, not as static files only.'
+        : '';
+      lastError = new Error(result.error || deploymentHint || `Request failed with status ${response.status}.`);
+      // A missing redirect may return 404; try the direct function URL.
+      if (response.status !== 404 || endpoint === endpoints[endpoints.length - 1]) {
+        throw lastError;
+      }
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error('Could not send the message.');
+      if (endpoint === endpoints[endpoints.length - 1]) throw lastError;
+    }
+  }
+
+  throw lastError;
+}
+
+telegramForm?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  setTelegramStatus('');
+
+  if (!telegramForm.checkValidity()) {
+    telegramForm.reportValidity();
+    return;
+  }
+
+  if (window.location.protocol === 'file:') {
+    setTelegramStatus('Run the site with “netlify dev” or deploy it through Netlify Git/CLI to test Telegram. Static file preview cannot execute the serverless function.', 'error');
+    return;
+  }
+
+  const data = Object.fromEntries(new FormData(telegramForm).entries());
+  if (data.website) return; // Honeypot.
+
+  const submitButton = telegramForm.querySelector('button[type="submit"]');
+  const originalContent = submitButton.innerHTML;
+  submitButton.disabled = true;
+  submitButton.innerHTML = '<span>Sending…</span><i class="fa-solid fa-spinner fa-spin"></i>';
+  setTelegramStatus('Sending your message…');
+
+  try {
+    await postTelegramMessage(data);
+    telegramForm.reset();
+    setTelegramStatus('Message sent successfully. I’ll get back to you soon.', 'success');
+  } catch (error) {
+    console.error('Telegram contact error:', error);
+    setTelegramStatus(`${error.message || 'Could not send through Telegram.'} You can use “Open Telegram” or email instead.`, 'error');
+  } finally {
+    submitButton.disabled = false;
+    submitButton.innerHTML = originalContent;
+  }
+});
+
+// Email copy helper.
+const copyEmailButton = document.getElementById('copyEmail');
+copyEmailButton?.addEventListener('click', async () => {
+  const email = 'mohamedamir5050@gmail.com';
+  try {
+    await navigator.clipboard.writeText(email);
+    copyEmailButton.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied</span>';
+    copyEmailButton.setAttribute('aria-label', 'Email address copied');
+    window.setTimeout(() => {
+      copyEmailButton.innerHTML = '<i class="fa-regular fa-copy"></i><span>Copy</span>';
+      copyEmailButton.setAttribute('aria-label', 'Copy email address');
+    }, 1800);
+  } catch {
+    window.location.href = `mailto:${email}`;
+  }
+});
+
+// Footer year and pointer glow.
+document.getElementById('year').textContent = new Date().getFullYear();
+const glow = document.querySelector('.cursor-glow');
+window.addEventListener('pointermove', (event) => {
+  glow.style.left = `${event.clientX}px`;
+  glow.style.top = `${event.clientY}px`;
+}, { passive: true });

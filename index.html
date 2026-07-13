@@ -1,514 +1,636 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
-    <link rel="stylesheet" href="CSS/styleSheet.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"
-    />
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/@coreui/icons/css/all.min.css"
-    />
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
-    <link rel="icon" href="Images/logo.png" />
-    <script src="JS/script.js"></script>
-    <title>Portfolio | Mohamed Amir</title>
-  </head>
-  <body>
-    <div class="navContainer">
-      <div class="logo">M0-AM1R</div>
+<html lang="en" data-theme="dark">
 
-      <div class="menuIcon">
-        <i class="cil-hamburger-menu" onclick="toggleNav()"></i>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Mohamed Amir — Android developer building scalable mobile applications with Kotlin, Jetpack Compose and Clean Architecture." />
+  <meta name="theme-color" content="#071619" />
+  <title>Mohamed Amir | Android Developer</title>
+  <link rel="icon" href="Images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="CSS/styleSheet.css" />
+</head>
 
-      <nav>
-        <div class="closeIcon">
-          <i class="fa fa-close" onclick="toggleNav()"></i>
-        </div>
-        <ul class="nav-links">
-          <div class="logo">M0-AM1R</div>
+<body>
+  <div class="theme-transition-overlay" id="themeTransitionOverlay" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
 
-          <li><a class="navLink" href="#home">Home</a></li>
-          <li><a class="navLink" href="#about">About</a></li>
-          <li><a class="navLink" href="#skills">Skills</a></li>
-          <li><a class="navLink" href="#education">Education</a></li>
-          <li><a class="navLink" href="#projects">Projects</a></li>
-          <li><a class="navLink" href="#certifications">Certifications</a></li>
-          <li><a class="navLink" href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+  <header class="site-header">
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch to light theme" title="Switch theme">
+      <span class="theme-toggle-ring" aria-hidden="true"></span>
+      <i class="fa-solid fa-moon theme-moon" aria-hidden="true"></i>
+      <i class="fa-solid fa-sun theme-sun" aria-hidden="true"></i>
+    </button>
 
-    <div id="home">
-      <div class="section">
-        <div class="sayHello animate sectionEnter">
-          <h1>Hi There &#128075;,</h1>
-          <h1>I'm<span> Mohamed Amir</span></h1>
-          <h4>I'm a <span id="multiple-text"></span></h4>
-          <h5 id="Accounts">My Accounts</h5>
-          <div class="myLinks">
-            <a
-              href="https://www.facebook.com/MOAM1R"
-              target="_blank"
-              class="cib-facebook"
-            ></a>
-            <a
-              href="https://www.linkedin.com/in/mo-am1r/"
-              target="_blank"
-              class="cib-linkedin"
-            ></a>
-            <a
-              href="https://github.com/MO-AM1R"
-              target="_blank"
-              class="cib-github"
-            ></a>
-            <a
-              href="https://leetcode.com/MO-AM1R/"
-              target="_blank"
-              class="cib-leetcode"
-            ></a>
-            <a
-              href="https://t.me/MOAM1R"
-              target="_blank"
-              class="cib-telegram"
-            ></a>
-          </div>
+    <a class="brand" href="#home" aria-label="Mohamed Amir — Home">
+      <span class="brand-bracket">&lt;</span><span class="brand-name">MO-AM1R</span><span
+        class="brand-bracket">/&gt;</span>
+    </a>
+
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#projects">Projects</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section-shell">
+      <div class="hero-copy reveal">
+        <span class="eyebrow"><span class="status-dot"></span> Available for Android opportunities</span>
+        <p class="hello">Hello, I’m</p>
+
+        <h1 class="hero-name" aria-label="Mohamed Amir">
+          <span>Mohamed</span>
+          <span>Amir</span>
+        </h1>
+
+        <div class="typewriter-shell">
+          <span class="typed-prefix">I’m a</span>
+          <h2 class="typed-role">
+            <span id="typedText" aria-live="polite">Android Developer</span>
+            <span class="typing-caret" aria-hidden="true"></span>
+          </h2>
         </div>
 
-        <div id="LogoContainer">
-          <img
-            class="myLogo"
-            id="Logo"
-            onmousemove="changePosition(event, this)"
-            onmouseleave="resetPosition(this)"
-            src="Images/logo.png"
-          />
+        <p class="hero-description">I engineer scalable, tested and maintainable mobile experiences using Kotlin,
+          Jetpack Compose, Clean Architecture and modern Android practices.</p>
+
+        <div class="hero-actions">
+          <a class="primary-btn" href="#projects">Explore my work <i class="fa-solid fa-arrow-right"></i></a>
+          <a class="secondary-btn" href="https://drive.google.com/file/d/1XwTzTG8T0ydXJOL5NZ5vYX3epEZIPvY9/view"
+            target="_blank" rel="noreferrer">View résumé</a>
+        </div>
+
+        <div class="socials">
+          <a href="https://github.com/MO-AM1R" target="_blank" rel="noreferrer" aria-label="GitHub"><i
+              class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/mo-am1r/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i
+              class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://leetcode.com/MO-AM1R/" target="_blank" rel="noreferrer" aria-label="LeetCode"><i
+              class="fa-solid fa-code"></i></a>
+          <a href="mailto:mohamedamir5050@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
         </div>
       </div>
-    </div>
 
-    <div id="about">
-      <div class="pageStart">About Me&emsp;<i class="fa fa-user"></i></div>
-      <div class="section">
-        <div class="information">
-          <div class="myImageContainer">
-            <img class="myImage" src="Images/My Image.jpg" />
-          </div>
-          <div class="myInfo">
-            <p>I'm Mohamed Amir</p>
-            <p>
-              I am a Computer Science graduate from the Faculty of
-              <strong>Computers and Artificial Intelligence</strong>
-            </p>
-            <p>at <strong>Cairo Unvirsety</strong></p>
-            <br>
-            <p>
-              passionate about building meaningful and user-centered mobile applications.
-              Over the past two years, I worked as a Flutter Instructor and Content Creator at Go Academy, where I mentored students, created structured learning content, and delivered training that simplifies complex topics for aspiring developers.
-              I enjoy transforming ideas into fully functional apps and helping others grow in the software development field. I’m always exploring new technologies and contributing to impactful, scalable mobile solutions.
-            </p>
-            <a
-              class="resumeBtn"
-              href="https://drive.google.com/file/d/1XwTzTG8T0ydXJOL5NZ5vYX3epEZIPvY9/view?usp=sharing"
-              target="_blank"
-            >
-              Resume
-              <i class="fa fa-angle-right" style="font-size: large"></i>
-            </a>
-          </div>
+      <div class="hero-visual reveal" aria-label="Mohamed Amir portrait">
+        <div class="hero-blob"></div>
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <img src="Images/My Image.jpg" alt="Mohamed Amir" />
+        <div class="floating-card code-card"><i class="fa-brands fa-android"></i><span>Kotlin + Compose</span></div>
+        <div class="floating-card quality-card"><i class="fa-solid fa-shield-halved"></i><span>Clean Architecture</span>
         </div>
       </div>
-    </div>
 
-    <div id="skills">
-      <div class="pageStart">
-        My Skills&emsp;<i class="fa fa-laptop-code"></i>
-      </div>
+      <a class="scroll-cue" href="#about" aria-label="Scroll to about"><span></span>Scroll</a>
+    </section>
 
-      <div class="section">
-        <div class="skillsContainer"></div>
-      </div>
-    </div>
-
-    <div id="education">
-      <div class="pageStart">
-        My Education&emsp;
-        <i class="fa fa-graduation-cap"></i>
-      </div>
-
-      <div class="section">
-        <div class="educationInfo">
-          <img src="Images/Cairo University.jpg" />
-          <div class="text">
-            <p>Bachelor of Computer Science and Artificial Intelligence</p>
-            <p>
-              Faculty of Computer Science and Artificial Intelligence | Cairo
-              University
-            </p>
-            <p>2021 - 2025</p>
-          </div>
+    <section id="about" class="about section-shell">
+      <div class="section-heading reveal"><span>01.</span>
+        <div>
+          <p>Who I am</p>
+          <h2>About Me</h2>
         </div>
       </div>
-    </div>
-
-    <div id="projects">
-      <div class="pageStart">
-        My Projects&emsp;
-        <i class="fa fa-laptop-code"></i>
-      </div>
-      <div class="section">
-        <div class="projectsContainer">
-          <div class="project">
-            <img src="Images/Bank System.png" />
-            <div class="projectInfo">
-              <h1>Bank System</h1>
-              <p>
-                Database Bank project & Java GUI implementation
-              </p>
-              <a
-                href="https://github.com/MO-AM1R/MyProjects/tree/main/Database/Bank System"
-                class="btn"
-                target="_blank"
-                >See Project</a
-              >
-            </div>
-          </div>
-
-          <div class="project">
-            <img src="Images/big Numbers.png" />
-
-            <div class="projectInfo">
-              <h1>Big Decimal Int</h1>
-              <p>
-                C++ project that store big integer numbers and do operations on
-                it
-              </p>
-              <a
-                href="https://github.com/MO-AM1R/MyProjects/tree/main/Big Decimal Int"
-                class="btn"
-                target="_blank"
-                >See Project</a
-              >
-            </div>
-          </div>
-
-          <div class="project">
-            <img src="Images/big Numbers.png" />
-
-            <div class="projectInfo">
-              <h1>Big Decimal Real</h1>
-              <p>
-                C++ project that store big real numbers and do operations on it
-              </p>
-              <a
-                href="https://github.com/MO-AM1R/MyProjects/tree/main/Big Decimal Real"
-                class="btn"
-                target="_blank"
-                >See Project</a
-              >
-            </div>
-          </div>
-
-          <div class="project">
-            <img
-              src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*J38nYZU7gzu-4lQmtjlSUw.jpeg"
-            />
-
-            <div class="projectInfo">
-              <h1>Data Structure</h1>
-              <p>
-                C++ projects that implement most of the data Structures
-              </p>
-              <a
-                href="https://github.com/MO-AM1R/MyProjects/tree/main/Data Structure & Algorithms"
-                class="btn"
-                target="_blank"
-                >See Project</a
-              >
-            </div>
-          </div>
-
-          <div class="project">
-            <img
-              src="Images/Tradify Ver Logo 1.png"
-            />
-
-            <div class="projectInfo">
-              <h1>Tradify</h1>
-              <p>
-                A smart, sustainable application that enables users to swap, sell, rent, or donate products.
-              </p>
-              <a
-                href="https://github.com/Tradify-GP"
-                class="btn"
-                target="_blank"
-                >See Project</a
-              >
-            </div>
-          </div>
-
-          <div class="project">
-            <img src="Images/Movie App.png" />
-
-            <div class="projectInfo">
-              <h1>Movie App API project</h1>
-              <p>
-                Website use movie API
-              </p>
-              <a
-                href="https://github.com/MO-AM1R/MyProjects/tree/main/Movie Website"
-                class="btn"
-                target="_blank"
-                >See Project</a
-              >
-            </div>
+      <div class="about-stage reveal">
+        <div class="about-copy">
+          <span class="eyebrow">Mobile engineering with purpose</span>
+          <h3>I turn product ideas into reliable mobile experiences.</h3>
+          <p>I’m a Computer Science graduate from Cairo University and a Native Mobile Application Development trainee
+            at ITI. My work focuses on Android applications that remain clean, responsive and maintainable as features
+            grow.</p>
+          <p>I previously worked as a Flutter Instructor and Content Creator at Go Academy, where I mentored students
+            and transformed difficult technical topics into practical learning paths.</p>
+          <div class="about-stats">
+            <div><strong>7+</strong><span>Featured projects</span></div>
+            <div><strong>2+</strong><span>Years teaching</span></div>
+            <div><strong>Excellent</strong><span>With honors</span></div>
           </div>
         </div>
 
-        <a
-          class="viewAllBtn"
-          href="https://github.com/MO-AM1R/MyProjects"
-          target="_blank"
-          >View all
-          <i class="fa fa-angle-right" style="font-size: large"></i>
+        <div class="about-portrait">
+          <div class="angular-cut"></div>
+          <img src="Images/My Image.jpg" alt="Mohamed Amir smiling" />
+          <div class="role-logo-badge" aria-label="MO-AM1R animated logo">
+            <span class="logo-halo" aria-hidden="true"></span>
+            <img src="Images/logo.png" alt="MO-AM1R logo" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section-shell">
+      <div class="skills-heading-row reveal">
+        <div class="section-heading"><span>02.</span>
+          <div>
+            <p>What I use</p>
+            <h2>Skills & Technologies</h2>
+          </div>
+        </div>
+        <button class="skills-view-toggle" id="skillsViewToggle" type="button" aria-pressed="false"
+          aria-controls="skillCategoryView skillGalleryView">
+          <i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>
+          <span>Explore Skill Gallery</span>
+        </button>
+      </div>
+
+      <div class="skills-view is-active" id="skillCategoryView">
+        <div class="skill-groups">
+          <article class="skill-panel reveal"><i class="fa-brands fa-android panel-icon"></i>
+            <h3>Android Engineering</h3>
+            <div class="chip-list"><span>Kotlin</span><span>Jetpack Compose</span><span>Material 3</span><span>Android
+                SDK</span><span>Navigation</span><span>ViewModel</span><span>XML
+                Views</span><span>WorkManager</span><span>AlarmManager</span><span>Notifications</span><span>Mapbox</span>
+            </div>
+          </article>
+          <article class="skill-panel reveal"><i class="fa-solid fa-cubes panel-icon"></i>
+            <h3>Architecture & Async</h3>
+            <div class="chip-list"><span>Clean
+                Architecture</span><span>MVVM</span><span>MVI</span><span>MVP</span><span>Repository
+                Pattern</span><span>SOLID</span><span>Design Patterns</span><span>Coroutines</span><span>Flow
+                API</span><span>RxJava</span></div>
+          </article>
+          <article class="skill-panel reveal"><i class="fa-solid fa-database panel-icon"></i>
+            <h3>Data, Network & Cloud</h3>
+            <div class="chip-list"><span>Retrofit</span><span>Ktor</span><span>REST
+                APIs</span><span>GraphQL</span><span>Room</span><span>SQLite</span><span>DataStore</span><span>Firebase</span><span>JSON/GSON</span><span>Coil</span>
+            </div>
+          </article>
+          <article class="skill-panel reveal"><i class="fa-solid fa-vial panel-icon"></i>
+            <h3>Testing & Delivery</h3>
+            <div class="chip-list"><span>JUnit</span><span>MockK</span><span>Unit
+                Testing</span><span>Git</span><span>GitHub</span><span>GitHub
+                Actions</span><span>Hilt</span><span>Koin</span><span>Gradle</span><span>Figma</span></div>
+          </article>
+          <article class="skill-panel reveal"><i class="fa-solid fa-mobile-screen panel-icon"></i>
+            <h3>Cross-Platform & Other</h3>
+            <div class="chip-list"><span>Kotlin Multiplatform</span><span>Compose
+                Multiplatform</span><span>Flutter</span><span>Dart</span><span>Java</span><span>Swift</span><span>C/C++</span><span>JavaFX</span><span>Core
+                Data</span><span>XIB</span></div>
+          </article>
+          <article class="skill-panel reveal"><i class="fa-solid fa-brain panel-icon"></i>
+            <h3>Engineering Foundations</h3>
+            <div class="chip-list"><span>OOP</span><span>Data Structures</span><span>Algorithms</span><span>Clean
+                Code</span><span>Functional Programming</span><span>Problem Solving</span><span>Team
+                Leadership</span><span>Agile Collaboration</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="skills-view skill-gallery" id="skillGalleryView" hidden>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="K"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg"
+              alt="Kotlin logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>Kotlin</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="C"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jetpackcompose/jetpackcompose-original.svg"
+              alt="Jetpack Compose logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>Jetpack
+            Compose</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="J"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java logo"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Java</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="F"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg"
+              alt="Flutter logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>Flutter</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="D"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" alt="Dart logo"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Dart</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="S"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg" alt="Swift logo"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Swift</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/mvvm.svg" alt="MVVM architecture icon" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>MVVM</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/clean-architecture.svg" alt="Clean Architecture icon"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Clean Architecture</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="F"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg"
+              alt="Firebase logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>Firebase</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/rest-api.svg" alt="REST API icon" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>REST
+            APIs</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/room-sql.svg" alt="SQL and Room database icon"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>SQL / Room</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="G"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git logo"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Git & GitHub</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="JS"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+              alt="JavaScript logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>JavaScript</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="5"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5 logo"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>HTML5</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="3"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3 logo"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>CSS3</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="C++"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+              alt="C++ logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>C++</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame" data-fallback="Py"><img
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+              alt="Python logo" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>Python</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/data-structures.svg" alt="Data Structures icon"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Data Structures</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/unit-testing.svg" alt="Unit Testing icon" loading="lazy"
+              onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div><span>Unit
+            Testing</span>
+        </article>
+        <article class="skill-tile">
+          <div class="skill-icon-frame"><img src="Images/skills/problem-solving.svg" alt="Problem Solving icon"
+              loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add('icon-fallback')" /></div>
+          <span>Problem Solving</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="education" class="section-shell">
+      <div class="section-heading reveal"><span>03.</span>
+        <div>
+          <p>My journey</p>
+          <h2>Education & Experience</h2>
+        </div>
+      </div>
+      <div class="timeline" id="educationTimeline">
+        <div class="timeline-track" aria-hidden="true"><span class="timeline-progress" id="timelineProgress"></span>
+        </div>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card"><span class="timeline-date">Oct 2025 — Present</span>
+            <h3>Native Mobile Application Development</h3>
+            <h4>Information Technology Institute (ITI) · Smart Village</h4>
+            <p>Intensive 9-month professional diploma focused on native mobile engineering, architecture, testing and
+              production-ready application development.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card"><span class="timeline-date">Sep 2021 — May 2025</span>
+            <h3>B.Sc. in Computer Science</h3>
+            <h4>Faculty of Computers and Artificial Intelligence · Cairo University</h4>
+            <p>Graduated with <strong>Excellent with Honors</strong>. Graduation project: Tradify, an AI-powered
+              marketplace for swapping, selling, renting and donating items.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card"><span class="timeline-date">Jun 2024 — Sep 2025</span>
+            <h3>Flutter Instructor & Content Creator</h3>
+            <h4>Go Academy Platform · Remote</h4>
+            <p>Delivered structured training sessions, mentored learners and developed practical educational content for
+              mobile development.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects" class="section-shell projects-section">
+      <div class="projects-heading-row reveal">
+        <div class="section-heading"><span>04.</span>
+          <div>
+            <p>Selected work</p>
+            <h2>Featured Projects</h2>
+          </div>
+        </div>
+        <a class="view-all-projects" href="https://github.com/MO-AM1R?tab=repositories" target="_blank"
+          rel="noreferrer">
+          View all repositories <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
       </div>
-    </div>
 
-    <div id="certifications">
-      <div class="pageStart">
-        My Certifications&emsp;
-        <i class="fa fa-certificate"></i>
+      <div class="project-grid">
+        <article class="project-card reveal">
+          <a class="project-image" href="https://github.com/MO-AM1R/news-nest" target="_blank" rel="noreferrer">
+            <span class="project-year">2026</span>
+            <img
+              src="https://raw.githubusercontent.com/MO-AM1R/news-nest/main/docs/mockups/newsnest-hero-split-light-dark.png"
+              alt="NewsNest application mockup" loading="lazy" onerror="this.src='Images/project-placeholder.svg'" />
+          </a>
+          <div class="project-body">
+            <h3>NewsNest</h3>
+            <p>Kotlin Multiplatform news app with shared Compose UI, offline storage, favorites and persistent themes.
+            </p>
+            <div class="tags"><span>KMP</span><span>Compose</span><span>Ktor</span><span>Room</span></div><a
+              class="project-link" href="https://github.com/MO-AM1R/news-nest" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <a class="project-image" href="https://github.com/Big-OO/carto" target="_blank" rel="noreferrer">
+            <span class="project-year">2026</span>
+            <img src="Images/projects/project-carto.svg" alt="Carto Shopify e-commerce project artwork"
+              loading="lazy" />
+          </a>
+          <div class="project-body">
+            <h3>Carto</h3>
+            <p>Native Android Shopify commerce app with catalog search, wishlist, cart, currencies, discounts and
+              checkout.</p>
+            <div class="tags"><span>Kotlin</span><span>Compose</span><span>Shopify</span><span>GraphQL</span></div><a
+              class="project-link" href="https://github.com/Big-OO/carto" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <a class="project-image" href="https://github.com/MO-AM1R/atmos" target="_blank" rel="noreferrer">
+            <span class="project-year">2025</span>
+            <img src="https://raw.githubusercontent.com/MO-AM1R/atmos/main/screenshots/App_Design_Mockup_1.png"
+              alt="Atmos weather application mockup" loading="lazy"
+              onerror="this.src='Images/project-placeholder.svg'" />
+          </a>
+          <div class="project-body">
+            <h3>Atmos</h3>
+            <p>Real-time weather, five-day forecasts, saved locations and scheduled alerts using tested Clean
+              Architecture.</p>
+            <div class="tags"><span>Kotlin</span><span>Compose</span><span>MVVM</span><span>Mapbox</span></div><a
+              class="project-link" href="https://github.com/MO-AM1R/atmos" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <a class="project-image yumi-image" href="https://github.com/MO-AM1R/yumi" target="_blank" rel="noreferrer">
+            <span class="project-year">2025</span>
+            <span class="phone-glow" aria-hidden="true"></span>
+            <img src="https://raw.githubusercontent.com/MO-AM1R/yumi/main/screenshots/home_light.png"
+              alt="Yumi meal planning application" loading="lazy" onerror="this.src='Images/project-placeholder.svg'" />
+          </a>
+          <div class="project-body">
+            <h3>Yumi</h3>
+            <p>Meal discovery and weekly planning with offline favorites, authentication and cross-device
+              synchronization.</p>
+            <div class="tags"><span>Java</span><span>MVP</span><span>Room</span><span>Firebase</span></div><a
+              class="project-link" href="https://github.com/MO-AM1R/yumi" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <a class="project-image" href="https://github.com/Tradify-GP" target="_blank" rel="noreferrer">
+            <span class="project-year">2025</span>
+            <img src="Images/projects/project-tradify.svg" alt="Tradify AI marketplace project artwork"
+              loading="lazy" />
+          </a>
+          <div class="project-body">
+            <h3>Tradify</h3>
+            <p>AI-powered marketplace for swapping, selling, renting and donating items across a Flutter mobile
+              experience.</p>
+            <div class="tags"><span>Flutter</span><span>Firebase</span><span>REST APIs</span><span>AI</span></div><a
+              class="project-link" href="https://github.com/Tradify-GP" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <a class="project-image" href="https://github.com/Tic-Tac-Toe-Java-Org" target="_blank" rel="noreferrer">
+            <span class="project-year">2024</span>
+            <img src="Images/projects/project-tictactoe.svg" alt="Tic-Tac-Toe multiplayer project artwork"
+              loading="lazy" />
+          </a>
+          <div class="project-body">
+            <h3>Tic-Tac-Toe</h3>
+            <p>Networked multiplayer desktop game with concurrent clients, game rooms and live server statistics.</p>
+            <div class="tags"><span>Java</span><span>Sockets</span><span>JavaFX</span><span>SQL</span></div><a
+              class="project-link" href="https://github.com/Tic-Tac-Toe-Java-Org" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
+        <article class="project-card reveal">
+          <a class="project-image" href="https://github.com/FantazyArena" target="_blank" rel="noreferrer">
+            <span class="project-year">2023</span>
+            <img src="Images/projects/project-fantazy.svg" alt="Fantazy sports tracking project artwork"
+              loading="lazy" />
+          </a>
+          <div class="project-body">
+            <h3>Fantazy</h3>
+            <p>iOS sports tracker for leagues, matches and teams with offline favorites and local persistence.</p>
+            <div class="tags"><span>Swift</span><span>MVP</span><span>REST</span><span>Core Data</span></div><a
+              class="project-link" href="https://github.com/FantazyArena" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-github"></i> View project</a>
+          </div>
+        </article>
       </div>
 
-      <div class="section">
-        <div class="certificationsContainer">
-          <div class="certificate">
-            <img
-              src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
-            />
-            <div class="certificateInfo">
-              <h1>Dart Programming Language</h1>
-              <p>
-                An Udemy certificate about
-                <strong>complete Dart learning</strong>
-              </p>
-              <a
-                href="https://www.udemy.com/certificate/UC-6b2b75a6-3568-4c68-a8c1-95a27b2143db/"
-                class="btn"
-                target="_blank"
-                >See Certificate</a
-              >
-            </div>
-          </div>
-          <div class="certificate">
-            <img
-              src="https://logowik.com/content/uploads/images/udemy-new-20212512.jpg"
-            />
-            <div class="certificateInfo">
-              <h1>Dart Programming Language</h1>
-              <p>
-                An Udemy certificate about
-                <strong>Web Front End learning</strong>
-              </p>
-              <a
-                href="https://www.udemy.com/certificate/UC-7b77136d-7280-4096-8523-e8142874dcd2/"
-                class="btn"
-                target="_blank"
-                >See Certificate</a
-              >
-            </div>
-          </div>
-          <div class="certificate">
-            <img
-              src="Images/ITI.png"
-            />
-            <div class="certificateInfo">
-              <h1>Flutter Summer Training</h1>
-              <p>
-                ITI Certification
-                <strong>Complete Flutter Training</strong>
-              </p>
-              <a
-                href="https://www.udemy.com/certificate/UC-6b2b75a6-3568-4c68-a8c1-95a27b2143db/"
-                class="btn"
-                target="_blank"
-                >See Certificate</a
-              >
-            </div>
-          </div>
-          <div class="certificate">
-            <img
-              src="Images/ITI.png"
-            />
-            <div class="certificateInfo">
-              <h1>Native Summer Training</h1>
-              <p>
-                ITI Certification
-                <strong>Complete Kotlin Training</strong>
-              </p>
-              <a
-                href="https://www.udemy.com/certificate/UC-6b2b75a6-3568-4c68-a8c1-95a27b2143db/"
-                class="btn"
-                target="_blank"
-                >See Certificate</a
-              >
-            </div>
-          </div>
+      <div class="projects-footer reveal">
+        <a class="secondary-btn" href="https://github.com/MO-AM1R?tab=repositories" target="_blank"
+          rel="noreferrer">View all repositories <i class="fa-brands fa-github"></i></a>
+      </div>
+    </section>
+
+    <section id="certificates" class="section-shell certificates-section">
+      <div class="section-heading reveal"><span>05.</span>
+        <div>
+          <p>Continuous learning</p>
+          <h2>Certifications</h2>
         </div>
       </div>
-    </div>
-
-    <div id="contact">
-      <div class="pageStart">
-        Contact Me&emsp;
-        <i class="fa fa-headset"></i>
-      </div>
-
-      <div class="section">
-        <div class="contactContainer">
-          <div class="columnOne">
-            <img
-              src="https://qontak.com/wp-content/uploads/2022/10/Tugas-Contact-Center.webp"
-            />
+      <div class="certificate-grid">
+        <article class="certificate-card reveal">
+          <div class="certificate-icon udemy-certificate"><img src="Images/certificates/udemy.svg" alt="Udemy" /></div>
+          <div class="certificate-content">
+            <span class="certificate-date">Udemy</span>
+            <h3>Dart Programming Language</h3>
+            <p>Complete Dart language fundamentals and practical programming concepts.</p>
+            <div class="certificate-meta"><span><i class="fa-solid fa-code"></i> Dart</span><span><i
+                  class="fa-solid fa-graduation-cap"></i> Online course</span></div>
+            <a class="certificate-link"
+              href="https://www.udemy.com/certificate/UC-6b2b75a6-3568-4c68-a8c1-95a27b2143db/" target="_blank"
+              rel="noreferrer">See certificate <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
           </div>
-          <div class="columnTwo">
-            <div class="inputIcon">
-              <i class="fa fa-user icon"></i>
-              <input
-                onfocus="toggleFocus(this)"
-                onblur="toggleFocus(this)"
-                placeholder="Name"
-              />
-            </div>
-            <div class="inputIcon">
-              <i class="fa fa-envelope icon"></i>
-              <input
-                onfocus="toggleFocus(this)"
-                onblur="toggleFocus(this)"
-                placeholder="Email"
-              />
-            </div>
-            <div class="inputIcon">
-              <i class="fa fa-phone icon"></i>
-              <input
-                onfocus="toggleFocus(this)"
-                onblur="toggleFocus(this)"
-                placeholder="Phone"
-              />
-            </div>
-            <div class="inputIcon">
-              <i class="fa fa-message icon"></i>
-              <textarea
-                placeholder="Message"
-                onfocus="toggleFocus(this)"
-                onblur="toggleFocus(this)"
-                rows="5"
-              ></textarea>
-            </div>
-            <a onclick="submit()"
-              >Submit
-              <i class="cil-send"></i>
-            </a>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-icon udemy-certificate"><img src="Images/certificates/udemy.svg" alt="Udemy" /></div>
+          <div class="certificate-content">
+            <span class="certificate-date">Udemy</span>
+            <h3>Web Front-End Development</h3>
+            <p>Front-end foundations covering HTML, CSS and JavaScript fundamentals.</p>
+            <div class="certificate-meta"><span><i class="fa-brands fa-html5"></i> HTML & CSS</span><span><i
+                  class="fa-brands fa-js"></i> JavaScript</span></div>
+            <a class="certificate-link"
+              href="https://www.udemy.com/certificate/UC-7b77136d-7280-4096-8523-e8142874dcd2/" target="_blank"
+              rel="noreferrer">See certificate <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-icon iti-certificate"><img src="Images/ITI.png"
+              alt="Information Technology Institute" /></div>
+          <div class="certificate-content">
+            <span class="certificate-date">August 2024</span>
+            <h3>Android Development using Kotlin</h3>
+            <p>Information Technology Institute (ITI) native Android summer training.</p>
+            <div class="certificate-meta"><span><i class="fa-regular fa-clock"></i> 122 hours</span><span><i
+                  class="fa-brands fa-android"></i> Kotlin & Android</span></div>
+            <a class="certificate-link"
+              href="https://drive.google.com/file/d/1xr2vJpzTEdSoHS5LaZK50OKvp9DgMdnp/view?usp=drive_link"
+              target="_blank" rel="noreferrer">See certificate <i
+                class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </article>
+
+        <article class="certificate-card reveal">
+          <div class="certificate-icon iti-certificate"><img src="Images/ITI.png"
+              alt="Information Technology Institute" /></div>
+          <div class="certificate-content">
+            <span class="certificate-date">August 2023</span>
+            <h3>Mobile Application Development using Flutter</h3>
+            <p>Information Technology Institute (ITI) cross-platform mobile summer training.</p>
+            <div class="certificate-meta"><span><i class="fa-regular fa-clock"></i> 96 hours</span><span><i
+                  class="fa-solid fa-mobile-screen-button"></i> Flutter</span></div>
+            <a class="certificate-link"
+              href="https://drive.google.com/file/d/17x7YqO0oRYth8YcYgl-a8OpfIvoBHmnh/view?usp=sharing" target="_blank"
+              rel="noreferrer">See certificate <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section-shell contact-section">
+      <div class="contact-card contact-hub reveal">
+        <div class="contact-intro">
+          <span class="eyebrow">Let’s build something useful</span>
+          <h2>Have a mobile product in mind?</h2>
+          <p>I’m open to Android opportunities, collaboration and practical product discussions. Choose the channel that
+            works best for you.</p>
+          <div class="contact-links">
+            <a href="https://www.linkedin.com/in/mo-am1r/" target="_blank" rel="noreferrer"><i
+                class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            <a href="https://mohamedamir.netlify.app/" target="_blank" rel="noreferrer"><i
+                class="fa-solid fa-globe"></i> Portfolio</a>
           </div>
         </div>
-      </div>
 
-      <footer class="footer">
-        <div class="waves">
-          <div class="wave" id="wave1"></div>
-          <div class="wave" id="wave2"></div>
-          <div class="wave" id="wave3"></div>
-          <div class="wave" id="wave4"></div>
+        <div class="contact-options">
+          <article class="contact-option telegram-option">
+            <div class="contact-option-head">
+              <span class="channel-icon telegram"><i class="fa-brands fa-telegram"></i></span>
+              <div>
+                <p class="channel-label">Option 01</p>
+                <h3>Send to my Telegram group</h3>
+              </div>
+            </div>
+            <p class="channel-description">Send a structured message to my private Telegram contact group through the
+              portfolio’s secure Netlify function.</p>
+            <form id="telegramForm" class="contact-form" action="/.netlify/functions/send-telegram" method="post"
+              novalidate>
+              <div class="form-grid">
+                <label><span>Name</span><input type="text" name="name" autocomplete="name" maxlength="80" required
+                    placeholder="Your name" /></label>
+                <label><span>Email</span><input type="email" name="email" autocomplete="email" maxlength="120" required
+                    placeholder="you@example.com" /></label>
+              </div>
+              <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autocomplete="tel"
+                  maxlength="30" placeholder="Your phone number" /></label>
+              <label><span>Message</span><textarea name="message" rows="5" maxlength="1500" required
+                  placeholder="Tell me about the opportunity or project..."></textarea></label>
+              <label class="bot-field" aria-hidden="true">Leave this empty<input type="text" name="website"
+                  tabindex="-1" autocomplete="off" /></label>
+              <div class="telegram-actions">
+                <button class="primary-btn contact-submit" type="submit"><span>Send via Telegram</span><i
+                    class="fa-solid fa-paper-plane"></i></button>
+                <a class="telegram-fallback" href="https://t.me/MOAM1R" target="_blank" rel="noreferrer"><i
+                    class="fa-brands fa-telegram"></i> Open Telegram</a>
+              </div>
+              <p class="form-status" id="telegramStatus" role="status" aria-live="polite"></p>
+            </form>
+          </article>
+
+          <article class="contact-option email-option">
+            <div class="contact-option-head">
+              <span class="channel-icon email"><i class="fa-solid fa-envelope"></i></span>
+              <div>
+                <p class="channel-label">Option 02</p>
+                <h3>Send me an email</h3>
+              </div>
+            </div>
+            <p class="channel-description">Prefer email? Open your mail app with my address and a ready-made portfolio
+              inquiry subject.</p>
+            <div class="email-address-card">
+              <span>Primary email</span>
+              <strong>mohamedamir5050@gmail.com</strong>
+              <button type="button" id="copyEmail" class="copy-email" aria-label="Copy email address"><i
+                  class="fa-regular fa-copy"></i><span>Copy</span></button>
+            </div>
+            <a class="secondary-btn email-action"
+              href="mailto:mohamedamir5050@gmail.com?subject=Portfolio%20inquiry%20from%20your%20website&body=Hello%20Mohamed%2C%0A%0AI%20would%20like%20to%20discuss%3A%0A%0A">Write
+              an email <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <p class="email-note">This opens the default email application on your device.</p>
+          </article>
         </div>
-        <ul class="social-icon">
-          <li class="social-icon-item">
-            <a
-              class="social-icon-link"
-              href="https://www.facebook.com/MOAM1R"
-              target="_blank"
-            >
-              <i class="cib-facebook"></i>
-            </a>
-          </li>
-          <li class="social-icon-item">
-            <a
-              class="social-icon-link"
-              href="https://leetcode.com/MO-AM1R/"
-              target="_blank"
-            >
-              <i class="cib-leetcode"></i>
-            </a>
-          </li>
-          <li class="social-icon-item">
-            <a
-              class="social-icon-link"
-              href="https://t.me/MOAM1R"
-              target="_blank"
-            >
-              <i class="cib-telegram"></i>
-            </a>
-          </li>
-          <li class="social-icon-item">
-            <a
-              class="social-icon-link"
-              href="https://github.com/MO-AM1R"
-              target="_blank"
-            >
-              <i class="cib-github"></i>
-            </a>
-          </li>
-          <li class="social-icon-item">
-            <a
-              class="social-icon-link"
-              href="https://www.linkedin.com/in/mo-am1r/"
-              target="_blank"
-            >
-              <i class="cib-linkedin"></i>
-            </a>
-          </li>
-        </ul>
-        <ul class="menu">
-          <li class="menu-item">
-            <a class="menu-link" href="#home">Home</a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-link" href="#about">About</a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-link" href="#skills">Skills</a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-link" href="#education">Education</a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-link" href="#projects">Projects</a>
-          </li>
-          <li class="menu-item">
-            <a class="menu-link" href="#certifications">Certifications</a>
-          </li>
-        </ul>
-        <br />
-        <p>
-          &copy;2023 Designed By Mohamed Amir
-          <span
-            ><i
-              class="fa fa-heart animate grow animate--infinite animate--slow"
-            ></i
-          ></span>
-        </p>
-      </footer>
-    </div>
+      </div>
+    </section>
+  </main>
 
-    <a class="to-top" id="to-top">
-      <i class="fa fa-chevron-up"></i>
-    </a>
-  </body>
+  <footer>
+    <p>© <span id="year"></span> Mohamed Amir. Built with clean code and too much coffee.</p>
+    <a href="#home">Back to top <i class="fa-solid fa-arrow-up"></i></a>
+  </footer>
+
+  <script src="JS/script.js"></script>
+</body>
+
 </html>

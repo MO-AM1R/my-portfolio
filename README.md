@@ -1,57 +1,36 @@
-# Portfolio README
+# Mohamed Amir Portfolio
 
-This repository contains the code and assets for **Mohamed Amir's Portfolio** website.
+Responsive Android-developer portfolio with modern light/dark theming, motion design and a secure Telegram contact flow.
 
-## Table of Contents
+## Latest updates
 
-- [Overview](#overview)
-- [File Structure](#file-structure)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Customization](#customization)
+- Animated gradient is applied to the top-bar `MO-AM1R` identity only.
+- Hero name returned to a clean theme-aware text and outline treatment.
+- Skills section now toggles between categorized panels and an icon-based Skill Gallery.
+- Restored all four certificates from the oldest portfolio: Dart, Web Front-End, Flutter and Android/Kotlin.
+- Added certificate links from the legacy implementation.
+- Compact three-column project grid, responsive layouts and animated floating technology tags.
+- Secure Telegram group contact through a Netlify Function with group ID `-991103490`.
 
-## Overview
+## Run locally
 
-This portfolio website serves as a personal showcase of Mohamed Amir's skills, projects, and certifications. It provides information about his background, education, projects, and contact details.
+```bash
+python -m http.server 8080
+```
 
-## File Structure
+Open `http://localhost:8080`.
 
-The repository is organized as follows:
+Telegram delivery requires a Netlify function deployment. See [TELEGRAM_SETUP.md](TELEGRAM_SETUP.md).
 
-- **index.html**: The main HTML file that structures the portfolio website.
-- **CSS/**: This folder contains the stylesheet for the website, named `styleSheet.css`.
-- **JS/**: This folder contains the JavaScript code for the website, named `script.js`.
-- **JSON/**: This folder contains a JSON file named `skills.json` that stores the skills information.
-- **Images/**: This folder holds all the images used in the portfolio website.
+## Main files
 
-## Installation
-
-To run this portfolio website locally, follow these steps:
-
-1. Clone this repository to your local machine using the following command:
-
-   ```
-   git clone https://github.com/MO-AM1R/my-portfolio
-   ```
-
-2. Open the `index.html` file in your web browser to view the portfolio website.
-
-## Usage
-
-You can use this portfolio as a template for your own portfolio. Replace the content and images with your own information and projects. Customize it to suit your needs.
-
-## Customization
-
-Here are some tips for customizing the portfolio:
-
-- **Personal Information**: Update the personal information in the HTML, such as your name, education details, and contact information.
-
-- **Skills**: Modify the `skills.json` file to include your own skills and descriptions.
-
-- **Projects**: Replace the project information in the HTML with your own projects, including project names, descriptions, and links.
-
-- **Images**: Replace the images in the `Images` folder with your own images.
-
-- **Styling**: Customize the `styleSheet.css` file to change the styling of the website, including colors, fonts, and layout.
-
-- **Additional Sections**: You can add more sections to the website if needed, such as a blog section or a testimonials section, by adding new HTML code and corresponding CSS and JavaScript as necessary.
+```text
+index.html
+CSS/styleSheet.css
+JS/script.js
+Images/skills/
+Images/certificates/
+netlify/functions/send-telegram.js
+netlify.toml
+TELEGRAM_SETUP.md
+```

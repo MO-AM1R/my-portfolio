@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8E5CF7"/>
+      <stop offset="100%" stop-color="#C7A8FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <g opacity="0.15">
+    <circle cx="650" cy="80" r="140" fill="white"/>
+    <circle cx="80" cy="520" r="180" fill="white"/>
+  </g>
+  <rect x="220" y="140" width="360" height="320" rx="28" fill="white" opacity="0.14"/>
+  <text x="400" y="290" font-size="120" text-anchor="middle" dominant-baseline="middle">♻️</text>
+  <text x="400" y="400" font-size="42" font-family="Arial, sans-serif" font-weight="700" fill="white" text-anchor="middle">Tradify</text>
+  <text x="400" y="440" font-size="22" font-family="Arial, sans-serif" fill="white" opacity="0.85" text-anchor="middle">AI Marketplace</text>
+</svg>
