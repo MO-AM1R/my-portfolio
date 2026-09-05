@@ -42,6 +42,7 @@
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
       <a href="#education">Education</a>
       <a href="#projects">Projects</a>
       <a href="#certificates">Certificates</a>
@@ -312,11 +313,42 @@
       </div>
     </section>
 
-    <section id="education" class="section-shell">
+
+    <section id="experience" class="section-shell">
       <div class="section-heading reveal"><span>03.</span>
         <div>
-          <p>My journey</p>
-          <h2>Education & Experience</h2>
+          <p>Where I contribute</p>
+          <h2>Experience</h2>
+        </div>
+      </div>
+      <div class="timeline" id="experienceTimeline">
+        <div class="timeline-track" aria-hidden="true"><span class="timeline-progress"></span></div>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-date">Sep 2026 — Present</span>
+            <h3>Associate Software Engineer</h3>
+            <h4>Fawry · Smart Village, Egypt · Hybrid</h4>
+            <p>Mobile software engineering role at Fawry.</p>
+          </div>
+        </article>
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <span class="timeline-date">Jun 2024 — Sep 2025</span>
+            <h3>Flutter Instructor</h3>
+            <h4>Go Academy · Remote</h4>
+            <p>Delivered structured training sessions, mentored learners and developed practical educational content for mobile development.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="education" class="section-shell">
+      <div class="section-heading reveal"><span>04.</span>
+        <div>
+          <p>My academic journey</p>
+          <h2>Education</h2>
         </div>
       </div>
       <div class="timeline" id="educationTimeline">
@@ -340,21 +372,12 @@
               marketplace for swapping, selling, renting and donating items.</p>
           </div>
         </article>
-        <article class="timeline-item reveal">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card"><span class="timeline-date">Jun 2024 — Sep 2025</span>
-            <h3>Flutter Instructor & Content Creator</h3>
-            <h4>Go Academy Platform · Remote</h4>
-            <p>Delivered structured training sessions, mentored learners and developed practical educational content for
-              mobile development.</p>
-          </div>
-        </article>
       </div>
     </section>
 
     <section id="projects" class="section-shell projects-section">
       <div class="projects-heading-row reveal">
-        <div class="section-heading"><span>04.</span>
+        <div class="section-heading"><span>05.</span>
           <div>
             <p>Selected work</p>
             <h2>Featured Projects</h2>
@@ -483,7 +506,7 @@
     </section>
 
     <section id="certificates" class="section-shell certificates-section">
-      <div class="section-heading reveal"><span>05.</span>
+      <div class="section-heading reveal"><span>06.</span>
         <div>
           <p>Continuous learning</p>
           <h2>Certifications</h2>
@@ -552,6 +575,27 @@
       </div>
     </section>
 
+
+    <section id="recommendations" class="section-shell" hidden>
+      <div class="section-heading reveal"><span>07.</span>
+        <div>
+          <p>What people say</p>
+          <h2>Recommendations</h2>
+        </div>
+      </div>
+      <div class="recommendations-grid" id="recommendationsGrid"></div>
+    </section>
+
+    <section id="languages" class="section-shell" hidden>
+      <div class="section-heading reveal"><span>08.</span>
+        <div>
+          <p>Communication</p>
+          <h2>Languages</h2>
+        </div>
+      </div>
+      <div class="language-grid" id="languageGrid"></div>
+    </section>
+
     <section id="contact" class="section-shell contact-section">
       <div class="contact-card contact-hub reveal">
         <div class="contact-intro">
@@ -562,7 +606,7 @@
           <div class="contact-links">
             <a href="https://www.linkedin.com/in/mo-am1r/" target="_blank" rel="noreferrer"><i
                 class="fa-brands fa-linkedin"></i> LinkedIn</a>
-            <a href="https://mohamedamir.netlify.app/" target="_blank" rel="noreferrer"><i
+            <a href="/" aria-label="Portfolio home"><i
                 class="fa-solid fa-globe"></i> Portfolio</a>
           </div>
         </div>
@@ -632,7 +676,8 @@
     <a href="#home">Back to top <i class="fa-solid fa-arrow-up"></i></a>
   </footer>
 
-  <script src="JS/script.js"></script>
+  <script src="JS/portfolio-data.js"></script>
+  <script type="module" src="JS/script.js"></script>
 </body>
 
 </html>

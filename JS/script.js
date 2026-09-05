@@ -1,3 +1,7 @@
+// Load the public portfolio content from the same Supabase project used by the CMS.
+// If the endpoint is unavailable, the static HTML remains as a resilient fallback.
+await window.PortfolioDataBridge?.load?.();
+
 const root = document.documentElement;
 const toggle = document.getElementById('themeToggle');
 const transitionOverlay = document.getElementById('themeTransitionOverlay');
@@ -143,13 +147,15 @@ sections.forEach((section) => navObserver.observe(section));
 
 // Auto-typing role animation without an external dependency.
 const typedElement = document.getElementById('typedText');
-const typingPhrases = [
-  'Android Developer',
-  'Jetpack Compose Developer',
-  'Kotlin Multiplatform Dev',
-  'Cairo University Graduate',
-  'ITI Native Mobile Trainee'
-];
+const typingPhrases = window.PORTFOLIO_DATA?.profile?.hero_roles?.length
+  ? window.PORTFOLIO_DATA.profile.hero_roles
+  : [
+      'Android Developer',
+      'Jetpack Compose Developer',
+      'Kotlin Multiplatform Dev',
+      'Cairo University Graduate',
+      'ITI Native Mobile Trainee'
+    ];
 
 function startTypewriter() {
   if (!typedElement) return;
@@ -184,27 +190,31 @@ function startTypewriter() {
 }
 startTypewriter();
 
-// Education timeline grows according to the visitor's scroll position.
-const timeline = document.getElementById('educationTimeline');
-const timelineProgress = document.getElementById('timelineProgress');
-const timelineItems = timeline ? [...timeline.querySelectorAll('.timeline-item')] : [];
+// Timelines grow according to the visitor's scroll position.
+const timelineControllers = [...document.querySelectorAll('.timeline')].map((timeline) => {
+  const progress = timeline.querySelector('.timeline-progress');
+  const items = [...timeline.querySelectorAll('.timeline-item')];
+  return { timeline, progress, items };
+});
 let timelineTicking = false;
 
 function updateTimelineProgress() {
   timelineTicking = false;
-  if (!timeline || !timelineProgress) return;
-
-  const rect = timeline.getBoundingClientRect();
   const viewportAnchor = innerHeight * 0.58;
-  const rawProgress = (viewportAnchor - rect.top) / Math.max(rect.height, 1);
-  const progress = Math.min(1, Math.max(0, rawProgress));
-  timelineProgress.style.height = `${progress * 100}%`;
 
-  timelineItems.forEach((item) => {
-    const dot = item.querySelector('.timeline-dot');
-    if (!dot) return;
-    const dotRect = dot.getBoundingClientRect();
-    item.classList.toggle('is-active', dotRect.top + dotRect.height / 2 <= viewportAnchor);
+  timelineControllers.forEach(({ timeline, progress, items }) => {
+    if (!progress || timeline.closest('section')?.hidden) return;
+    const rect = timeline.getBoundingClientRect();
+    const rawProgress = (viewportAnchor - rect.top) / Math.max(rect.height, 1);
+    const progressValue = Math.min(1, Math.max(0, rawProgress));
+    progress.style.height = `${progressValue * 100}%`;
+
+    items.forEach((item) => {
+      const dot = item.querySelector('.timeline-dot');
+      if (!dot) return;
+      const dotRect = dot.getBoundingClientRect();
+      item.classList.toggle('is-active', dotRect.top + dotRect.height / 2 <= viewportAnchor);
+    });
   });
 }
 
@@ -351,7 +361,9 @@ telegramForm?.addEventListener('submit', async (event) => {
 // Email copy helper.
 const copyEmailButton = document.getElementById('copyEmail');
 copyEmailButton?.addEventListener('click', async () => {
-  const email = 'mohamedamir5050@gmail.com';
+  const email = document.querySelector('.email-address-card strong')?.textContent?.trim()
+    || window.PORTFOLIO_DATA?.profile?.email
+    || 'mohamedamir5050@gmail.com';
   try {
     await navigator.clipboard.writeText(email);
     copyEmailButton.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied</span>';

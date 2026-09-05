@@ -1,36 +1,64 @@
 # Mohamed Amir Portfolio
 
-Responsive Android-developer portfolio with modern light/dark theming, motion design and a secure Telegram contact flow.
+Responsive Android-developer portfolio with modern light/dark theming, motion design, a secure Telegram contact flow, and Supabase-backed content managed by the separate Portfolio CMS dashboard.
 
-## Latest updates
+## Supabase CMS migration
 
-- Animated gradient is applied to the top-bar `MO-AM1R` identity only.
-- Hero name returned to a clean theme-aware text and outline treatment.
-- Skills section now toggles between categorized panels and an icon-based Skill Gallery.
-- Restored all four certificates from the oldest portfolio: Dart, Web Front-End, Flutter and Android/Kotlin.
-- Added certificate links from the legacy implementation.
-- Compact three-column project grid, responsive layouts and animated floating technology tags.
-- Secure Telegram group contact through a Netlify Function with group ID `-991103490`.
+The visual design remains the same, but portfolio content now loads from Supabase through a Vercel serverless API. Dynamic data includes profile information, experience, education, projects, skills, certifications, social links, recommendations, languages, contact content, SEO settings, and section visibility.
+
+The original HTML content remains as a fallback if the data endpoint is unavailable.
+
+## Required Vercel environment variables
+
+Use the same Supabase project as the CMS dashboard:
+
+```env
+SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+SUPABASE_PUBLISHABLE_KEY=sb_publishable_your_key_here
+
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+ALLOWED_ORIGIN=https://YOUR_PORTFOLIO_DOMAIN
+```
+
+See [SUPABASE_SETUP.md](SUPABASE_SETUP.md) for setup details.
+
+## Data flow
+
+```text
+Portfolio CMS -> Supabase <- /api/portfolio <- Portfolio
+                             /api/contact   -> Telegram
+```
+
+The public portfolio only reads data allowed by Supabase RLS. It does not have admin/write access.
 
 ## Run locally
 
+Use Vercel CLI for the real application:
+
 ```bash
-python -m http.server 8080
+npm install -g vercel
+vercel link
+vercel env pull .env.local
+vercel dev
 ```
 
-Open `http://localhost:8080`.
+Then open the local URL printed by Vercel, normally `http://localhost:3000`.
 
-Telegram delivery requires a Netlify function deployment. See [TELEGRAM_SETUP.md](TELEGRAM_SETUP.md).
+Do **not** use `python -m http.server` when testing Supabase or Telegram. A basic static server cannot execute `/api/portfolio` or `/api/contact`, so it will return 404/501 errors.
 
-## Main files
+## Main integration files
 
 ```text
 index.html
 CSS/styleSheet.css
+JS/portfolio-data.js
 JS/script.js
-Images/skills/
-Images/certificates/
-netlify/functions/send-telegram.js
-netlify.toml
-TELEGRAM_SETUP.md
+server/portfolio-data.js
+api/portfolio.js
+api/contact.js
+SUPABASE_SETUP.md
+.env.example
 ```
+
+This project is Vercel-only. Netlify configuration and functions have been removed.
