@@ -18,42 +18,31 @@
   <link rel="stylesheet" href="CSS/styleSheet.css" />
 </head>
 
-<body class="portfolio-loading">
+<body class="is-booting">
 
-  <!-- Full-screen startup loader shown while the live CMS data is being hydrated. -->
-  <div class="portfolio-loader" id="portfolioLoader" role="status" aria-live="polite" aria-label="Loading portfolio data">
-    <div class="portfolio-loader__aurora portfolio-loader__aurora--one" aria-hidden="true"></div>
-    <div class="portfolio-loader__aurora portfolio-loader__aurora--two" aria-hidden="true"></div>
-    <div class="portfolio-loader__grid" aria-hidden="true"></div>
-
-    <div class="portfolio-loader__content">
-      <div class="portfolio-loader__mark" aria-hidden="true">
-        <span class="portfolio-loader__orbit portfolio-loader__orbit--outer"></span>
-        <span class="portfolio-loader__orbit portfolio-loader__orbit--inner"></span>
-        <span class="portfolio-loader__code">&lt;<b>MO</b>/&gt;</span>
+  <div class="site-loader" id="siteLoader" role="status" aria-live="polite" aria-label="Loading portfolio">
+    <div class="site-loader__inner">
+      <div class="loader-mark" aria-hidden="true">
+        <span class="loader-orbit loader-orbit-a"></span>
+        <span class="loader-orbit loader-orbit-b"></span>
+        <span class="loader-orbit loader-orbit-c"></span>
+        <span class="loader-node loader-node-a"></span>
+        <span class="loader-node loader-node-b"></span>
+        <span class="loader-node loader-node-c"></span>
+        <span class="loader-node loader-node-d"></span>
+        <div class="loader-core"><span>&lt;MO/&gt;</span></div>
       </div>
-
-      <p class="portfolio-loader__eyebrow">MO-AM1R // LIVE PORTFOLIO</p>
-      <h1>Building your view<span class="portfolio-loader__dots" aria-hidden="true"></span></h1>
-      <p class="portfolio-loader__status" id="portfolioLoaderStatus">Syncing live portfolio data</p>
-
-      <div class="portfolio-loader__progress" aria-hidden="true">
-        <span></span>
-      </div>
-
-      <div class="portfolio-loader__steps" aria-hidden="true">
-        <span>Profile</span>
-        <span>Experience</span>
-        <span>Projects</span>
-        <span>Skills</span>
+      <div class="loader-copy">
+        <p class="loader-kicker">MO-AM1R // LIVE PORTFOLIO</p>
+        <h2>Building your view...</h2>
+        <p class="loader-status" id="loaderStatus">Syncing live portfolio data</p>
+        <div class="loader-progress" aria-hidden="true"><span id="loaderProgressBar"></span></div>
+        <p class="loader-steps">Profile • Experience • Projects • Skills</p>
       </div>
     </div>
   </div>
 
-  <noscript>
-    <style>.portfolio-loader{display:none!important}body.portfolio-loading{overflow:auto!important}</style>
-  </noscript>
-
+  <canvas class="network-canvas" id="networkCanvas" aria-hidden="true"></canvas>
   <div class="theme-transition-overlay" id="themeTransitionOverlay" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 

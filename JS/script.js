@@ -1,42 +1,42 @@
 // Load the public portfolio content from the same Supabase project used by the CMS.
-// A branded startup loader covers the brief hydration window so the page never feels blank.
-const portfolioLoader = document.getElementById('portfolioLoader');
-const portfolioLoaderStatus = document.getElementById('portfolioLoaderStatus');
-const portfolioLoadStartedAt = performance.now();
-const minimumLoaderDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 120 : 720;
-
-function setPortfolioLoaderStatus(message, state = '') {
-  if (!portfolioLoaderStatus) return;
-  portfolioLoaderStatus.textContent = message;
-  portfolioLoaderStatus.classList.toggle('is-ready', state === 'ready');
-  portfolioLoaderStatus.classList.toggle('is-fallback', state === 'fallback');
-}
-
-async function finishPortfolioLoader(dataLoaded) {
-  const elapsed = performance.now() - portfolioLoadStartedAt;
-  const wait = Math.max(0, minimumLoaderDuration - elapsed);
-  if (wait) await new Promise((resolve) => window.setTimeout(resolve, wait));
-
-  setPortfolioLoaderStatus(
-    dataLoaded ? 'Portfolio ready' : 'Live data unavailable — opening local snapshot',
-    dataLoaded ? 'ready' : 'fallback'
-  );
-
-  await new Promise((resolve) => window.setTimeout(resolve, dataLoaded ? 180 : 320));
-  document.body.classList.remove('portfolio-loading');
-  portfolioLoader?.classList.add('is-complete');
-  window.setTimeout(() => portfolioLoader?.remove(), 560);
-}
-
-let hydratedPortfolioData = null;
-try {
-  setPortfolioLoaderStatus('Syncing live portfolio data');
-  hydratedPortfolioData = await window.PortfolioDataBridge?.load?.();
-} finally {
-  await finishPortfolioLoader(Boolean(hydratedPortfolioData));
-}
-
+// If the endpoint is unavailable, the static HTML remains as a resilient fallback.
+const bootStartedAt = performance.now();
 const root = document.documentElement;
+const loaderElement = document.getElementById('siteLoader');
+const loaderStatusElement = document.getElementById('loaderStatus');
+const loaderProgressBar = document.getElementById('loaderProgressBar');
+const body = document.body;
+
+function wait(ms) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms));
+}
+
+function updateLoader(status, fallback = false) {
+  if (loaderStatusElement && status) loaderStatusElement.textContent = status;
+  body?.classList.toggle('loader-fallback', Boolean(fallback));
+}
+
+async function finishLoader(minimumDuration = 2600) {
+  const elapsed = performance.now() - bootStartedAt;
+  const remaining = Math.max(0, minimumDuration - elapsed);
+  if (remaining) await wait(remaining);
+  if (loaderProgressBar) loaderProgressBar.style.width = '100%';
+  loaderElement?.classList.add('is-exiting');
+  body?.classList.remove('is-booting');
+  body?.classList.add('is-ready');
+  window.setTimeout(() => {
+    if (loaderElement) loaderElement.hidden = true;
+  }, 760);
+}
+
+updateLoader('Syncing live portfolio data');
+const loadedData = await window.PortfolioDataBridge?.load?.();
+if (loadedData) {
+  updateLoader('Portfolio ready — launching experience');
+} else {
+  updateLoader('Live data unavailable — opening local snapshot', true);
+}
+
 const toggle = document.getElementById('themeToggle');
 const transitionOverlay = document.getElementById('themeTransitionOverlay');
 const storedTheme = localStorage.getItem('portfolio-theme');
@@ -48,8 +48,9 @@ root.dataset.theme = storedTheme || preferredTheme;
 function updateThemeUI() {
   const isDark = root.dataset.theme === 'dark';
   document.querySelector('meta[name="theme-color"]').content = isDark ? '#071619' : '#f5f8f8';
-  toggle.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
-  toggle.title = `Switch to ${isDark ? 'light' : 'dark'} theme`;
+  toggle?.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
+  if (toggle) toggle.title = `Switch theme`;
+  window.dispatchEvent(new CustomEvent('portfolio:theme-changed', { detail: { theme: root.dataset.theme } }));
 }
 
 function themeRevealGeometry() {
@@ -70,7 +71,7 @@ function commitTheme(nextTheme) {
 }
 
 async function switchTheme() {
-  if (toggle.disabled) return;
+  if (!toggle || toggle.disabled) return;
   toggle.disabled = true;
   const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
   const { x, y, radius } = themeRevealGeometry();
@@ -106,20 +107,20 @@ async function switchTheme() {
 }
 
 updateThemeUI();
-toggle.addEventListener('click', switchTheme);
+toggle?.addEventListener('click', switchTheme);
 
 // Mobile navigation.
 const menu = document.querySelector('.site-nav');
 const menuBtn = document.querySelector('.menu-toggle');
-menuBtn.addEventListener('click', () => {
+menuBtn?.addEventListener('click', () => {
   const open = menu.classList.toggle('open');
   menuBtn.setAttribute('aria-expanded', String(open));
   menuBtn.innerHTML = `<i class="fa-solid fa-${open ? 'xmark' : 'bars'}"></i>`;
 });
 document.querySelectorAll('.site-nav a').forEach((link) => link.addEventListener('click', () => {
-  menu.classList.remove('open');
-  menuBtn.setAttribute('aria-expanded', 'false');
-  menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  menu?.classList.remove('open');
+  menuBtn?.setAttribute('aria-expanded', 'false');
+  if (menuBtn) menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
 }));
 
 // Section reveal animations.
@@ -130,6 +131,9 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
+document.addEventListener('portfolio:data-ready', () => {
+  document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+});
 
 // Skills can switch between grouped categories and a visual icon gallery.
 const skillsViewToggle = document.getElementById('skillsViewToggle');
@@ -144,12 +148,10 @@ function setSkillsView(showGallery, persist = true) {
   skillCategoryView.classList.toggle('is-active', !showGallery);
   skillGalleryView.classList.toggle('is-active', showGallery);
   skillsViewToggle.setAttribute('aria-pressed', String(showGallery));
-  skillsViewToggle.querySelector('span').textContent = showGallery
-    ? 'Show Skill Categories'
-    : 'Explore Skill Gallery';
-  skillsViewToggle.querySelector('i').className = showGallery
-    ? 'fa-solid fa-layer-group'
-    : 'fa-solid fa-table-cells-large';
+  const label = skillsViewToggle.querySelector('span');
+  const icon = skillsViewToggle.querySelector('i');
+  if (label) label.textContent = showGallery ? 'Show Skill Categories' : 'Explore Skill Gallery';
+  if (icon) icon.className = showGallery ? 'fa-solid fa-layer-group' : 'fa-solid fa-table-cells-large';
 
   if (persist) localStorage.setItem('portfolio-skills-view', showGallery ? 'gallery' : 'categories');
 }
@@ -260,6 +262,191 @@ function requestTimelineUpdate() {
 window.addEventListener('scroll', requestTimelineUpdate, { passive: true });
 window.addEventListener('resize', requestTimelineUpdate);
 requestTimelineUpdate();
+
+function initInteractiveCards() {
+  const selectors = '.skill-panel, .timeline-card, .project-card, .certificate-card, .recommendation-card, .language-card, .contact-option, .about-stage';
+  document.querySelectorAll(selectors).forEach((card) => {
+    const handlePointer = (event) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+      card.style.setProperty('--my', `${event.clientY - rect.top}px`);
+    };
+    card.addEventListener('pointermove', handlePointer, { passive: true });
+    card.addEventListener('pointerenter', handlePointer, { passive: true });
+  });
+}
+
+function initNetworkBackground() {
+  const canvas = document.getElementById('networkCanvas');
+  if (!canvas || reduceMotion) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const pointer = {
+    x: null,
+    y: null,
+    active: false,
+    radius: 160
+  };
+
+  const network = {
+    points: [],
+    width: 0,
+    height: 0,
+    colors: {
+      node: 'rgba(66,232,216,0.85)',
+      lineBase: 'rgba(66,232,216,0.12)',
+      lineHighlight: 'rgba(92,124,255,0.36)',
+      halo: 'rgba(66,232,216,0.22)'
+    }
+  };
+
+  const POINT_DENSITY = () => Math.max(36, Math.min(72, Math.floor((window.innerWidth * window.innerHeight) / 24000)));
+
+  function updateColors() {
+    const isDark = root.dataset.theme === 'dark';
+    network.colors = isDark
+      ? {
+          node: 'rgba(66,232,216,0.85)',
+          lineBase: 'rgba(66,232,216,0.12)',
+          lineHighlight: 'rgba(92,124,255,0.36)',
+          halo: 'rgba(66,232,216,0.22)'
+        }
+      : {
+          node: 'rgba(10,162,148,0.72)',
+          lineBase: 'rgba(10,162,148,0.10)',
+          lineHighlight: 'rgba(91,124,255,0.22)',
+          halo: 'rgba(10,162,148,0.16)'
+        };
+  }
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    network.width = window.innerWidth;
+    network.height = window.innerHeight;
+    canvas.width = Math.floor(network.width * dpr);
+    canvas.height = Math.floor(network.height * dpr);
+    canvas.style.width = `${network.width}px`;
+    canvas.style.height = `${network.height}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const targetCount = POINT_DENSITY();
+    if (network.points.length > targetCount) {
+      network.points.length = targetCount;
+    }
+    while (network.points.length < targetCount) {
+      network.points.push({
+        x: Math.random() * network.width,
+        y: Math.random() * network.height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        size: 1.4 + Math.random() * 2.4
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, network.width, network.height);
+
+    const maxDistance = Math.min(170, Math.max(110, network.width * 0.12));
+    const mouseRange = pointer.radius;
+
+    for (const point of network.points) {
+      point.x += point.vx;
+      point.y += point.vy;
+      if (point.x <= 0 || point.x >= network.width) point.vx *= -1;
+      if (point.y <= 0 || point.y >= network.height) point.vy *= -1;
+      point.x = Math.max(0, Math.min(network.width, point.x));
+      point.y = Math.max(0, Math.min(network.height, point.y));
+    }
+
+    for (let i = 0; i < network.points.length; i += 1) {
+      const a = network.points[i];
+      for (let j = i + 1; j < network.points.length; j += 1) {
+        const b = network.points[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance > maxDistance) continue;
+
+        let alpha = 1 - distance / maxDistance;
+        let width = 1;
+        let stroke = network.colors.lineBase;
+
+        if (pointer.active && pointer.x != null && pointer.y != null) {
+          const da = Math.hypot(a.x - pointer.x, a.y - pointer.y);
+          const db = Math.hypot(b.x - pointer.x, b.y - pointer.y);
+          const influence = Math.max(0, 1 - Math.min(da, db) / mouseRange);
+          if (influence > 0) {
+            alpha = Math.min(1, alpha + influence * 0.8);
+            width = 1 + influence * 1.4;
+            stroke = influence > 0.32 ? network.colors.lineHighlight : network.colors.lineBase;
+          }
+        }
+
+        ctx.strokeStyle = stroke.replace(/\d?\.\d+\)|\d+\)$/g, `${(alpha * (stroke === network.colors.lineHighlight ? 0.85 : 0.55)).toFixed(3)})`);
+        ctx.lineWidth = width;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+
+    if (pointer.active && pointer.x != null && pointer.y != null) {
+      ctx.fillStyle = network.colors.halo;
+      ctx.beginPath();
+      ctx.arc(pointer.x, pointer.y, 88, 0, Math.PI * 2);
+      ctx.fill();
+
+      network.points.forEach((point) => {
+        const distance = Math.hypot(point.x - pointer.x, point.y - pointer.y);
+        if (distance > mouseRange) return;
+        const influence = 1 - distance / mouseRange;
+        ctx.strokeStyle = network.colors.lineHighlight.replace(/\d?\.\d+\)|\d+\)$/g, `${(0.22 + influence * 0.52).toFixed(3)})`);
+        ctx.lineWidth = 1.1 + influence * 1.6;
+        ctx.beginPath();
+        ctx.moveTo(pointer.x, pointer.y);
+        ctx.lineTo(point.x, point.y);
+        ctx.stroke();
+      });
+    }
+
+    network.points.forEach((point) => {
+      const distanceToPointer = pointer.active && pointer.x != null && pointer.y != null
+        ? Math.hypot(point.x - pointer.x, point.y - pointer.y)
+        : Infinity;
+      const highlighted = distanceToPointer < mouseRange;
+      const size = point.size + (highlighted ? (1 - distanceToPointer / mouseRange) * 2.6 : 0);
+      ctx.fillStyle = highlighted ? network.colors.lineHighlight : network.colors.node;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('pointermove', (event) => {
+    pointer.x = event.clientX;
+    pointer.y = event.clientY;
+    pointer.active = true;
+  }, { passive: true });
+
+  window.addEventListener('pointerleave', () => {
+    pointer.active = false;
+    pointer.x = null;
+    pointer.y = null;
+  }, { passive: true });
+
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('portfolio:theme-changed', updateColors);
+
+  updateColors();
+  resizeCanvas();
+  animate();
+}
 
 // Telegram contact form. The bot token remains inside the Vercel Function.
 const telegramForm = document.getElementById('telegramForm');
@@ -415,6 +602,12 @@ copyEmailButton?.addEventListener('click', async () => {
 document.getElementById('year').textContent = new Date().getFullYear();
 const glow = document.querySelector('.cursor-glow');
 window.addEventListener('pointermove', (event) => {
+  if (!glow) return;
   glow.style.left = `${event.clientX}px`;
   glow.style.top = `${event.clientY}px`;
 }, { passive: true });
+
+initInteractiveCards();
+initNetworkBackground();
+requestAnimationFrame(requestTimelineUpdate);
+await finishLoader(2600);

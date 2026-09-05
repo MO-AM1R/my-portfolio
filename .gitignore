@@ -1,22 +1,9 @@
-# Local environment / secrets
 .env
 .env.*
 !.env.example
-
-# Vercel local metadata
-.vercel/
-
-# Dependencies / build output
 node_modules/
-dist/
-coverage/
-
-# Logs / cache
-*.log
-.cache/
-
-# OS / editor noise
 .DS_Store
 Thumbs.db
-.idea/
-.vscode/
+
+.vercel
+.env*
