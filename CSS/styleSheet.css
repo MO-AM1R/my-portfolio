@@ -1011,3 +1011,60 @@ footer{padding-bottom:42px}
   .site-header{top:8px;height:62px}
   .header-actions{gap:6px}
 }
+
+
+/* =========================================================
+   Header positioning hotfix
+   - Keep the glass shell pinned to the viewport.
+   - Use nearly the full viewport width with equal gutters.
+   - Keep navigation centered and controls visible on the right.
+   ========================================================= */
+.site-header{
+  position:fixed!important;
+  top:12px!important;
+  left:12px!important;
+  right:12px!important;
+  width:auto!important;
+  max-width:none!important;
+  transform:none!important;
+  grid-template-columns:minmax(170px,1fr) minmax(0,auto) minmax(170px,1fr);
+  overflow:visible;
+}
+.site-header .site-nav{
+  min-width:0;
+  max-width:100%;
+}
+.header-actions{
+  min-width:56px;
+  position:relative;
+  z-index:2;
+}
+.theme-toggle{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+/* The hero intro panel should feel clean and flat, not elevated. */
+.hero-copy{
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+@media(max-width:1180px){
+  .site-header{
+    left:10px!important;
+    right:10px!important;
+    grid-template-columns:minmax(145px,1fr) minmax(0,auto) minmax(145px,1fr);
+  }
+}
+
+@media(max-width:960px){
+  .site-header{
+    left:8px!important;
+    right:8px!important;
+    top:8px!important;
+    width:auto!important;
+    grid-template-columns:minmax(0,1fr) auto;
+  }
+}
