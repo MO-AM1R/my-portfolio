@@ -915,7 +915,7 @@ body.loader-fallback .loader-kicker{color:#f59e0b}
 .project-card:hover .project-image img{transform:scale(1.06);filter:saturate(1.06)}
 .project-year{backdrop-filter:blur(10px)}
 .project-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.project-link{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface-2);font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:.28s ease}
+.project-link{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface-2);color:var(--text);font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:.28s ease}
 .project-link:hover{transform:translateY(-2px);border-color:var(--accent)}
 
 .timeline-card:hover{transform:translateX(10px) translateY(-2px)}
