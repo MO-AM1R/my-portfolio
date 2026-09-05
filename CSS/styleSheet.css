@@ -846,7 +846,8 @@ body{position:relative;min-height:100vh}
 body::before,body::after{content:"";position:fixed;inset:auto;pointer-events:none;z-index:-3;border-radius:50%;filter:blur(70px);opacity:.55;transition:opacity .45s ease}
 body::before{width:420px;height:420px;left:-120px;top:12vh;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 20%,transparent),transparent 68%)}
 body::after{width:380px;height:380px;right:-140px;bottom:8vh;background:radial-gradient(circle,color-mix(in srgb,#5b7cff 18%,transparent),transparent 70%)}
-.site-header,main,footer{position:relative;z-index:1}
+.site-header{z-index:1000}
+main,footer{position:relative;z-index:1}
 .site-header,.section-shell,.project-card,.contact-option,.timeline-card,.skill-panel,.about-stage,.certificate-card,.recommendation-card,.language-card{isolation:isolate}
 
 .network-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none;opacity:.9}
@@ -891,7 +892,7 @@ body.loader-fallback .loader-kicker{color:#f59e0b}
 @keyframes pulse-ring{50%{transform:translate(-50%,-50%) scale(1.06);opacity:1}}
 @keyframes loader-node-pulse{50%{transform:scale(1.18)}}
 
-.hero,.about-stage,.skill-panel,.timeline-card,.project-card,.certificate-card,.recommendation-card,.language-card,.contact-option{box-shadow:var(--shadow)}
+.about-stage,.skill-panel,.timeline-card,.project-card,.certificate-card,.recommendation-card,.language-card,.contact-option{box-shadow:var(--shadow)}
 .hero-copy,.hero-visual,.contact-option,.project-card,.skill-panel,.timeline-card,.certificate-card,.recommendation-card,.language-card{position:relative}
 
 .site-nav a{padding:10px 13px;border-radius:999px;transition:color .28s ease,background .28s ease,box-shadow .28s ease}
