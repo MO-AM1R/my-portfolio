@@ -276,7 +276,7 @@
     if (item.issuer_logo_url) return safeUrl(item.issuer_logo_url);
     const issuer = String(item.issuer || '').toLowerCase();
     if (issuer.includes('udemy')) return 'Images/certificates/udemy.svg';
-    if (issuer.includes('information technology institute') || issuer === 'iti') return 'Images/ITI.png';
+    if (issuer.includes('information technology institute') || issuer === 'iti') return 'Images/ITI.jpg';
     return '';
   }
 
