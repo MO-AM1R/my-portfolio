@@ -18,7 +18,42 @@
   <link rel="stylesheet" href="CSS/styleSheet.css" />
 </head>
 
-<body>
+<body class="portfolio-loading">
+
+  <!-- Full-screen startup loader shown while the live CMS data is being hydrated. -->
+  <div class="portfolio-loader" id="portfolioLoader" role="status" aria-live="polite" aria-label="Loading portfolio data">
+    <div class="portfolio-loader__aurora portfolio-loader__aurora--one" aria-hidden="true"></div>
+    <div class="portfolio-loader__aurora portfolio-loader__aurora--two" aria-hidden="true"></div>
+    <div class="portfolio-loader__grid" aria-hidden="true"></div>
+
+    <div class="portfolio-loader__content">
+      <div class="portfolio-loader__mark" aria-hidden="true">
+        <span class="portfolio-loader__orbit portfolio-loader__orbit--outer"></span>
+        <span class="portfolio-loader__orbit portfolio-loader__orbit--inner"></span>
+        <span class="portfolio-loader__code">&lt;<b>MO</b>/&gt;</span>
+      </div>
+
+      <p class="portfolio-loader__eyebrow">MO-AM1R // LIVE PORTFOLIO</p>
+      <h1>Building your view<span class="portfolio-loader__dots" aria-hidden="true"></span></h1>
+      <p class="portfolio-loader__status" id="portfolioLoaderStatus">Syncing live portfolio data</p>
+
+      <div class="portfolio-loader__progress" aria-hidden="true">
+        <span></span>
+      </div>
+
+      <div class="portfolio-loader__steps" aria-hidden="true">
+        <span>Profile</span>
+        <span>Experience</span>
+        <span>Projects</span>
+        <span>Skills</span>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <style>.portfolio-loader{display:none!important}body.portfolio-loading{overflow:auto!important}</style>
+  </noscript>
+
   <div class="theme-transition-overlay" id="themeTransitionOverlay" aria-hidden="true"></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 

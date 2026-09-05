@@ -62,3 +62,9 @@ SUPABASE_SETUP.md
 ```
 
 This project is Vercel-only. Netlify configuration and functions have been removed.
+
+## Startup loading experience
+
+The public site now shows a branded animated loader while `/api/portfolio` hydrates the page from Supabase. The loader exits after live data is ready and falls back cleanly to the built-in static snapshot if the API is unavailable.
+
+Local-only files such as `.env`, `.env.local`, `.vercel/`, and `.git/` are intentionally excluded from distributable archives. Keep deployment secrets in Vercel Environment Variables and use `.env.example` only as a template.

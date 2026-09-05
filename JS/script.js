@@ -1,6 +1,40 @@
 // Load the public portfolio content from the same Supabase project used by the CMS.
-// If the endpoint is unavailable, the static HTML remains as a resilient fallback.
-await window.PortfolioDataBridge?.load?.();
+// A branded startup loader covers the brief hydration window so the page never feels blank.
+const portfolioLoader = document.getElementById('portfolioLoader');
+const portfolioLoaderStatus = document.getElementById('portfolioLoaderStatus');
+const portfolioLoadStartedAt = performance.now();
+const minimumLoaderDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 120 : 720;
+
+function setPortfolioLoaderStatus(message, state = '') {
+  if (!portfolioLoaderStatus) return;
+  portfolioLoaderStatus.textContent = message;
+  portfolioLoaderStatus.classList.toggle('is-ready', state === 'ready');
+  portfolioLoaderStatus.classList.toggle('is-fallback', state === 'fallback');
+}
+
+async function finishPortfolioLoader(dataLoaded) {
+  const elapsed = performance.now() - portfolioLoadStartedAt;
+  const wait = Math.max(0, minimumLoaderDuration - elapsed);
+  if (wait) await new Promise((resolve) => window.setTimeout(resolve, wait));
+
+  setPortfolioLoaderStatus(
+    dataLoaded ? 'Portfolio ready' : 'Live data unavailable — opening local snapshot',
+    dataLoaded ? 'ready' : 'fallback'
+  );
+
+  await new Promise((resolve) => window.setTimeout(resolve, dataLoaded ? 180 : 320));
+  document.body.classList.remove('portfolio-loading');
+  portfolioLoader?.classList.add('is-complete');
+  window.setTimeout(() => portfolioLoader?.remove(), 560);
+}
+
+let hydratedPortfolioData = null;
+try {
+  setPortfolioLoaderStatus('Syncing live portfolio data');
+  hydratedPortfolioData = await window.PortfolioDataBridge?.load?.();
+} finally {
+  await finishPortfolioLoader(Boolean(hydratedPortfolioData));
+}
 
 const root = document.documentElement;
 const toggle = document.getElementById('themeToggle');
